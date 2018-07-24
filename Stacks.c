@@ -27,7 +27,7 @@ int main()
     scanf("%d",&size);
     while(1){
         printf("\n1.Enstack\n2.Destack\n3.Display\n4.Exit\n");
-        printf("Choose your option:\t");
+        printf("\nChoose your option:\t");
         scanf("%d",&choice);
         switch(choice)
         {
@@ -38,7 +38,7 @@ int main()
             case 3: display();
                     break;
             case 4: return 0;
-            default: printf("Error: Enter Valid Option");
+            default: printf(">>> Error: Enter Valid Option <<<");
         }
     }
 }
@@ -49,15 +49,15 @@ void enstack()
 
     if(top==size-1)
     {
-        printf("\n Error: Stack OverFlow \n");
+        printf("\n>>> Error: Stack OverFlow <<<\n");
         return;
     }
     else
     {
-        printf("Enter the element to be inserted:\t");
+        printf("\nEnter the element to be inserted:\t");
         scanf("%d",&elem);
         stack[++top]=elem;
-        printf("\n%d has been pushed\n",stack[top]);
+        printf("%d has been pushed\n",stack[top]);
     }
     return;
 }
@@ -67,12 +67,12 @@ void destack()
     
     if(top==-1)
     {
-        printf("\n Error: Stack UnderFlow \n");
+        printf("\n >>> Error: Stack UnderFlow <<<\n");
         return;
     }
     else
     {
-        printf("\n%d has been removed",stack[top--]);
+        printf("\n%d has been removed\n",stack[top--]);
     }
     return;
 }
@@ -80,10 +80,9 @@ void display()
 {
     int i=0;
     
-    printf("Display\n\n");
     if(top==-1)
     {
-        printf("\n Error: Stack UnderFlow \n");
+        printf("\n >>> Error: Stack UnderFlow <<<\n");
         return;
     }
     else
