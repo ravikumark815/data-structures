@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define INITIAL 1
-
-void push()
-
-void arrayInsert(int *arr, int * currentSize, int * arrayCapacity)
+int arrayInsert(int *array, int * currentSize, int * arrayCapacity)
 {
     int elem, index;
     
@@ -16,19 +12,31 @@ void arrayInsert(int *arr, int * currentSize, int * arrayCapacity)
     
     if(*currentSize > *arrayCapacity)
     {
-        realloc(arr, sizeof(arr)*2);
-        *arrayCapacity = sizeof(arr)*2;
+        array = (int *)realloc(array, sizeof(array)*2);
+        *arrayCapacity = sizeof(array)*2;
     }
 
-    arr[index] = elem;
+    array[index] = elem;
     *currentSize = *currentSize + 1;
+
+    return 0;
+}
+
+int arrayDelete()
+{
+    return 0;
+}
+
+int arrayDisplay()
+{
+    return 0;
 }
 
 int main()
 {
-    int currentSize = 0;
-    int arrayCapacity = INITIAL;
-    int * arr = malloc(arrayCapacity * sizeof(int));
+    int currentSize = 0, choice = 0;
+    int arrayCapacity = 1;
+    int * array = malloc(arrayCapacity * sizeof(int));
 
     printf("\n------- Dynamic Array -------\n");
     while(1){
@@ -37,7 +45,7 @@ int main()
         scanf("%d",&choice);
         switch(choice)
         {
-            case 1: arrayInsert(arr, &currentSize, &arrayCapacity);
+            case 1: arrayInsert(array, &currentSize, &arrayCapacity);
                     break;
             case 2: arrayDelete();
                     break;
