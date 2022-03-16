@@ -27,8 +27,14 @@ int arrayDelete()
     return 0;
 }
 
-int arrayDisplay()
+int arrayDisplay(int * array, int currentSize)
 {
+    printf("|");
+    for (int i=0; i<currentSize; i++)
+    {
+        printf("%d\t|", array[i]);
+    }
+    
     return 0;
 }
 
@@ -49,7 +55,7 @@ int main()
                     break;
             case 2: arrayDelete();
                     break;
-            case 3: arrayDisplay();
+            case 3: arrayDisplay(array, currentSize);
                     break;
             case 4: return 0;
             default: printf("\n>> Error: Enter Valid Option <<\n");
