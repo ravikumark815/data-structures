@@ -12,7 +12,6 @@ Display : Display current elements in Array
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 int arrayInsert(int *array, int * currentSize, int * arrayCapacity)
 {
