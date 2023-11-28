@@ -25,7 +25,7 @@ void enstack(int *stack)
     else {
         printf("\nEnter the element to be inserted:\t");
         scanf("%d",&elem);
-        stack[++top]=elem;
+        stack[++top] = elem;
         printf(">> %d has been inserted\n",stack[top]);
     }
     return;
