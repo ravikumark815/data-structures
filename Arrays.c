@@ -55,14 +55,14 @@ int arrayDelete(int *array, int *currentSize, int *arrayCapacity)
     return 0;
 }
 
-int arrayDisplay(int * array, int currentSize)
+int arrayDisplay (int * array, int currentSize)
 {
     if (!currentSize) {
         printf("\nDisplay:\n>> Array Empty!\n");
         return 0;
     }
     printf("\nDisplay:\n|");
-    for (int i=0; i<currentSize; i++)
+    for (int i = 0; i < currentSize; i++)
     {
         printf("%d\t|", array[i]);
     }
@@ -74,7 +74,7 @@ int main()
 {
     int currentSize = 0, choice = 0;
     int arrayCapacity = 1;
-    int * array = malloc(arrayCapacity * sizeof(int));
+    int *array = malloc(arrayCapacity * sizeof(int));
 
     printf("\n---------------------\n");
     printf("------- Array -------");
@@ -82,7 +82,7 @@ int main()
         printf("\n---------------------\n");
         printf("1.Insert\n2.Delete\n3.Display\n4.Exit\n");
         printf("\nChoose your Option:\t");
-        scanf("%d",&choice);
+        scanf("%d", &choice);
         switch(choice)
         {
             case 1: arrayInsert(array, &currentSize, &arrayCapacity);
