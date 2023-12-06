@@ -31,35 +31,35 @@ void enlink()
     NODE temp,cur=first;
     
     printf("Enter the element to Enlink:\t");
-    scanf("%d",&item);
+    scanf("%d", &item);
     temp = (NODE*)malloc(sizeof(NODE));
     temp->data = item;
     if (first == NULL){
         first = temp;
         temp->link = NULL;
-        printf("%d has been inserted at the beginning\n",cur->data);
+        printf("%d has been inserted at the beginning\n", cur->data);
         return;
     }
     else {
         printf("\n1.Beginning\n2.Ending\n3.InBetween");
         printf("\nPosition to be inserted in:\t");
-        scanf("%d",&choice);
-        if (choice == 1){
+        scanf("%d", &choice);
+        if (choice == 1) {
             first = temp;
             temp->link = NULL;
-            printf("%d has been inserted at the beginning\n",cur->data);
+            printf("%d has been inserted at the beginning\n", cur->data);
         }
-        else if (choice == 2){
+        else if (choice == 2) {
             while(cur->link!=NULL)
                 cur = cur->link;
             cur->link = temp;
             temp->link = NULL;
-            printf("%d has been inserted at the ending\n",temp->data);
+            printf("%d has been inserted at the ending\n", temp->data);
         }
-        else if (choice == 3){
+        else if (choice == 3) {
             NODE prev;
             printf("\nEnter the value of element before which the element should be inserted\t:");
-            scanf("%d",&pos);
+            scanf("%d", &pos);
             while (cur->data != pos) {
                 prev = cur;
                 cur = cur->link;
@@ -67,7 +67,7 @@ void enlink()
             cur = cur->link;
             prev->link = temp;
             temp->link = cur;
-            printf("%d has been inserted before %d",temp->data,pos);
+            printf("%d has been inserted before %d", temp->data, pos);
         }
     }
     return;
@@ -87,10 +87,10 @@ void delink()
     else {
         printf("\n1.Beginning\n2.Ending\n3.InBetween");
         printf("\nPosition to be deleted from:\t");
-        scanf("%d",&choice);
+        scanf("%d", &choice);
         if (choice == 1) {
             first = cur->link;
-            printf("%d has been deleted\n",cur->data);
+            printf("%d has been deleted\n", cur->data);
             free(cur);
         }
         else if (choice == 2) {
@@ -99,12 +99,12 @@ void delink()
             prev = cur;
             prev->link = NULL;
             cur = cur->link;            
-            printf("%d has been deleted\n",cur->data);
+            printf("%d has been deleted\n", cur->data);
             free(cur);
         }
         else if (choice == 3) {
             printf("\nEnter the element before which the element should be deleted\t:");
-            scanf("%d",&pos);
+            scanf("%d", &pos);
             while (cur->data != pos) {
                 prev = cur;
                 cur = cur->link;
