@@ -12,43 +12,19 @@ Display : Display current elements in Linked List
 #include<stdio.h>
 #include<stdlib.h>
 
-void enlink();
-void delink();
-void display();
-
 typedef struct Node
 {
     int data;
     struct Node *link;
 };
-typedef struct Node* NODE;
+typedef struct Node* NODE; //Declare a type named NODE for easy use
 
-NODE *first = NULL;
+NODE *first = NULL; //Pointing first node to NULL
 
-int main()
-{
-    int choice;
-
-    printf("\n------- Singly Linked List -------\n");
-
-    while(1){
-        printf("\n1.Enlink\n2.Delink\n3.Display\n4.Exit\n");
-        printf("\nChoose your Option:\t");
-        scanf("%d",&choice);
-        switch(choice)
-        {
-            case 1: enlink();
-                    break;
-            case 2: delink();
-                    break;
-            case 3: display();
-                    break;
-            case 4: return 0;
-            default: printf("\n>> Error: Enter Valid Option <<\n");
-        }
-    }
-}
-
+/*
+Function    : Enlink
+Purpose     : To add a node at given position
+*/
 void enlink()
 {
     int item,choice,pos;
@@ -153,5 +129,29 @@ void display()
             cur = cur->link;
         }
         printf("%d\n",(cur->link)->data);
+    }
+}
+
+int main()
+{
+    int choice;
+
+    printf("\n------- Singly Linked List -------\n");
+
+    while(1){
+        printf("\n1.Enlink\n2.Delink\n3.Display\n4.Exit\n");
+        printf("\nChoose your Option:\t");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1: enlink();
+                    break;
+            case 2: delink();
+                    break;
+            case 3: display();
+                    break;
+            case 4: return 0;
+            default: printf("\n>> Error: Enter Valid Option <<\n");
+        }
     }
 }
