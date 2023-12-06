@@ -28,7 +28,7 @@ Purpose     : To add a node at given position
 void enlink()
 {
     int item,choice,pos;
-    NODE temp,cur=first,prev;
+    NODE temp,cur=first;
     
     printf("Enter the element to Enlink:\t");
     scanf("%d",&item);
@@ -57,7 +57,8 @@ void enlink()
             printf("%d has been inserted at the ending\n",temp->data);
         }
         else if(choice==3){
-            printf("\nEnter the element before which the element should be inserted\t:");
+            NODE prev;
+            printf("\nEnter the value of element before which the element should be inserted\t:");
             scanf("%d",&pos);
             while(cur->data!=pos){
                 prev = cur;
