@@ -73,6 +73,10 @@ void enlink()
     return;
 }
 
+/*
+Function    : Delink
+Purpose     : To delete a node at given position
+*/
 void delink()
 {
     int choice,pos;
@@ -117,6 +121,10 @@ void delink()
     return;
 }
 
+/*
+Function    : Display
+Purpose     : To display the current status of the linked list
+*/
 void display()
 {
     NODE cur = first;
@@ -132,6 +140,7 @@ void display()
         printf("%d\n", (cur->link)->data);
     }
 }
+
 
 int main()
 {
