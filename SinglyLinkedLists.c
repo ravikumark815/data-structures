@@ -9,17 +9,18 @@ Delink : Deleting Elements from Linked List
 Display : Display current elements in Linked List
 
 */
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct Node
 {
     int data;
     struct Node *link;
-};
-typedef struct Node* NODE; //Declare a type named NODE for easy use
+} Node;
 
-NODE *first = NULL; //Pointing first node to NULL
+typedef struct Node* NODE; // Declare a type named NODE for easy use
+
+NODE *first = NULL; // Pointing first node to NULL
 
 /*
 Function    : Enlink
@@ -27,8 +28,8 @@ Purpose     : To add a node at given position
 */
 void enlink()
 {
-    int item,choice,pos;
-    NODE temp,cur=first;
+    int item, choice, pos;
+    NODE temp, cur = first;
     
     printf("Enter the element to Enlink:\t");
     scanf("%d", &item);
@@ -79,8 +80,8 @@ Purpose     : To delete a node at given position
 */
 void delink()
 {
-    int choice,pos;
-    NODE cur,prev;
+    int choice, pos;
+    NODE cur, prev;
 
     cur = first;
     
