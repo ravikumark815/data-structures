@@ -29,10 +29,11 @@ Purpose     : To add a node at given position
 void enlink()
 {
     int item, choice, pos;
-    NODE temp, cur = first;
+    NODE temp = NULL, cur = first;
     
     printf("Enter the element to Enlink:\t");
     scanf("%d", &item);
+    printf("Ravi:%d", __LINE__);
     temp = (NODE)malloc(sizeof(NODE));
     temp->data = item;
     if (first == NULL){
@@ -58,7 +59,7 @@ void enlink()
             printf("%d has been inserted at the ending\n", temp->data);
         }
         else if (choice == 3) {
-            NODE prev;
+            NODE prev = NULL;
             printf("\nEnter the value of element before which the element should be inserted\t:");
             scanf("%d", &pos);
             while (cur->data != pos) {
@@ -81,9 +82,8 @@ Purpose     : To delete a node at given position
 void delink()
 {
     int choice, pos;
-    NODE cur, prev;
+    NODE cur = first, prev = NULL;
 
-    cur = first;
     
     if (cur->link = NULL) {
         printf("\n>>> Error: Linked List UnderFlow <<<\n");
