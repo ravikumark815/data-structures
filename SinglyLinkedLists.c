@@ -20,7 +20,7 @@ typedef struct Node
 
 typedef struct Node* NODE; // Declare a type named NODE for easy use
 
-NODE *first = NULL; // Pointing first node to NULL
+NODE first = NULL; // Pointing first node to NULL
 
 /*
 Function    : Enlink
@@ -33,7 +33,7 @@ void enlink()
     
     printf("Enter the element to Enlink:\t");
     scanf("%d", &item);
-    temp = (NODE*)malloc(sizeof(NODE));
+    temp = (NODE)malloc(sizeof(NODE));
     temp->data = item;
     if (first == NULL){
         first = temp;
