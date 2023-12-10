@@ -12,13 +12,13 @@ Display : Display current elements in Linked List
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct Node
+struct node
 {
     int data;
-    struct Node *link;
-} Node;
+    struct node *link;
+};
 
-typedef struct Node* NODE; // Declare a type named NODE for easy use
+typedef struct node* NODE; // Declare a type named NODE for easy use
 
 NODE first = NULL;
 
@@ -33,7 +33,6 @@ void enlink()
     
     printf("Enter the element to Enlink:\t");
     scanf("%d", &item);
-    printf("Ravi:%d", __LINE__);
     temp = (NODE)malloc(sizeof(NODE));
     temp->data = item;
     if (first == NULL){
