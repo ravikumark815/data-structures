@@ -92,7 +92,7 @@ void enlink_pos()
     
     temp = create_node();
 
-    printf("\nEnter the value of element after which the element should be inserted\t:");
+    printf("\nEnter the value of element after which new element will be inserted: ");
     scanf("%d", &pos);
     while (cur->data != pos) {
         cur = cur->link;
@@ -105,49 +105,70 @@ void enlink_pos()
 }
 
 /*
-Function    : Delink
-Purpose     : To delete a node at given position
+Function    : delink_first
+Purpose     : To delete node at the beginning of list
 */
-void delink()
+void delink_start()
+{
+    NODE cur = first;
+    
+    if (cur == NULL) {
+        printf("\n>>> Error: Linked List UnderFlow <<<\n");
+        return;
+    }
+    first = first->link;
+    free(cur);
+    
+    printf("\nFirst element deleted\n");
+    return;
+}
+
+/*
+Function    : delink_end
+Purpose     : To delete node at the end of list
+*/
+void delink_end()
+{
+    NODE cur = first, prev = NULL;
+    
+    if (cur == NULL) {
+        printf("\n>>> Error: Linked List UnderFlow <<<\n");
+        return;
+    }
+    while (cur->link != NULL) {
+        prev = cur;
+        cur = cur->link;
+    }
+    prev->link = NULL;
+    free(cur);
+    
+    printf("\nLast element deleted\n");
+    return;
+}
+
+/*
+Function    : delink_pos
+Purpose     : To delete a node after given pos
+*/
+void delink_pos()
 {
     int choice, pos;
-    NODE cur = first, prev = NULL;
+    NODE cur = first, temp = NULL;
 
     
     if (cur == NULL) {
         printf("\n>>> Error: Linked List UnderFlow <<<\n");
         return;
     }
-    else {
-        printf("\n1.Beginning\n2.Ending\n3.InBetween");
-        printf("\nPosition to be deleted from:\t");
-        scanf("%d", &choice);
-        if (choice == 1) {
-            first = cur->link;
-            printf("%d has been deleted\n", cur->data);
-            free(cur);
-        }
-        else if (choice == 2) {
-            while(cur->link!=NULL)
-                cur = cur->link;
-            prev = cur;
-            prev->link = NULL;
-            cur = cur->link;            
-            printf("%d has been deleted\n", cur->data);
-            free(cur);
-        }
-        else if (choice == 3) {
-            printf("\nEnter the element before which the element should be deleted\t:");
-            scanf("%d", &pos);
-            while (cur->data != pos) {
-                prev = cur;
-                cur = cur->link;
-            }
-            prev->link = cur->link;
-            printf("%d has been deleted", cur->data);
-            free(cur);
-        }
+    printf("\nEnter the element whose next node should be deleted: ");
+    scanf("%d", &pos);
+    while (cur->data != pos) {
+        cur = cur->link;
     }
+    temp = cur->link;
+    cur->link = cur->link->link;
+    printf("%d has been deleted", temp->data);
+    free(temp);
     return;
 }
 
@@ -179,7 +200,7 @@ void display()
 
 int main()
 {
-    int choice, enlink_choice;
+    int choice, enlink_choice, delink_choice;
 
     printf("\n------- Singly Linked List -------");
 
@@ -205,7 +226,19 @@ int main()
                         default: printf("\n>> Error: Enter Valid Option <<\n");
                     }
                     break;
-            case 2: delink();
+            case 2: printf("\n1.Delink first\n2.Delink last\n3.Delink after a node\n");
+                    printf("\nChoose your Option:\t");
+                    scanf("%d", &delink_choice);
+                    switch(delink_choice)
+                    {
+                        case 1: delink_start();
+                                break;
+                        case 2: delink_end();
+                                break;
+                        case 3: delink_pos();
+                                break;
+                        default: printf("\n>> Error: Enter Valid Option <<\n");
+                    }
                     break;
             case 3: display();
                     break;
