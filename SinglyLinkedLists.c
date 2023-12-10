@@ -24,12 +24,12 @@ NODE first = NULL;
 
 /*
 Function    : Enlink
-Purpose     : To add a node at given position
+Purpose     : To insert node at a given position
 */
 void enlink()
 {
     int item, choice, pos;
-    NODE temp = NULL, cur = first;
+    NODE temp, cur = first;
     
     printf("Enter the element to Enlink:\t");
     scanf("%d", &item);
@@ -46,8 +46,8 @@ void enlink()
         printf("\nPosition to be inserted in:\t");
         scanf("%d", &choice);
         if (choice == 1) {
+            temp->link = first;
             first = temp;
-            temp->link = NULL;
             printf("%d has been inserted at the beginning\n", cur->data);
         }
         else if (choice == 2) {
@@ -71,6 +71,7 @@ void enlink()
             printf("%d has been inserted before %d", temp->data, pos);
         }
     }
+    free(temp);
     return;
 }
 
