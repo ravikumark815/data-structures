@@ -20,24 +20,40 @@ struct node
 
 typedef struct node* NODE; // Declare a type named NODE for easy use
 
-NODE first = NULL;
+/*
+Function    : create_node
+Purpose     : To create a new NODE with data and link->NULL
+*/
+NODE create_node()
+{
+    int data;
+    NODE temp;
+    temp = (NODE)malloc(sizeof(NODE));
+    
+    printf("Enter the element to Enlink:\t");
+    scanf("%d", &data);
+    if (temp == NULL) {
+        printf(">>> Error: Insufficient Memory\n");
+        exit (0);
+    }
+    temp->data = data;
+    temp->link = NULL;
+    return temp;
+}
 
 /*
 Function    : Enlink
 Purpose     : To insert node at a given position
 */
-void enlink()
+void enlink(NODE first)
 {
-    int item, choice, pos;
+    int choice, pos;
     NODE temp, cur = first;
     
-    printf("Enter the element to Enlink:\t");
-    scanf("%d", &item);
-    temp = (NODE)malloc(sizeof(NODE));
-    temp->data = item;
+    temp = create_node();
     if (first == NULL){
+        printf("## %d\n", __LINE__);
         first = temp;
-        temp->link = NULL;
         printf("%d has been inserted at the beginning\n", cur->data);
         return;
     }
@@ -45,30 +61,31 @@ void enlink()
         printf("\n1.Beginning\n2.Ending\n3.InBetween");
         printf("\nPosition to be inserted in:\t");
         scanf("%d", &choice);
-        if (choice == 1) {
-            temp->link = first;
-            first = temp;
-            printf("%d has been inserted at the beginning\n", cur->data);
-        }
-        else if (choice == 2) {
-            while(cur->link!=NULL)
-                cur = cur->link;
-            cur->link = temp;
-            temp->link = NULL;
-            printf("%d has been inserted at the ending\n", temp->data);
-        }
-        else if (choice == 3) {
-            NODE prev = NULL;
-            printf("\nEnter the value of element before which the element should be inserted\t:");
-            scanf("%d", &pos);
-            while (cur->data != pos) {
-                prev = cur;
-                cur = cur->link;
-            }
-            cur = cur->link;
-            prev->link = temp;
-            temp->link = cur;
-            printf("%d has been inserted before %d", temp->data, pos);
+        
+        switch(choice)
+        {
+            case 1: temp->link = first;
+                    first = temp;
+                    printf("%d has been inserted at the beginning\n", cur->data);
+                    break;
+            case 2: while(cur->link!=NULL)
+                    cur = cur->link;
+                    cur->link = temp;
+                    temp->link = NULL;
+                    printf("%d has been inserted at the ending\n", temp->data);
+                    break;
+            case 3: NODE prev = NULL;
+                    printf("\nEnter the value of element before which the element should be inserted\t:");
+                    scanf("%d", &pos);
+                    while (cur->data != pos) {
+                        prev = cur;
+                        cur = cur->link;
+                    }
+                    cur = cur->link;
+                    prev->link = temp;
+                    temp->link = cur;
+                    printf("%d has been inserted before %d", temp->data, pos);
+            default: printf("\n>> Error: Enter Valid Option <<\n");
         }
     }
     free(temp);
@@ -79,7 +96,7 @@ void enlink()
 Function    : Delink
 Purpose     : To delete a node at given position
 */
-void delink()
+void delink(NODE first)
 {
     int choice, pos;
     NODE cur = first, prev = NULL;
@@ -126,7 +143,7 @@ void delink()
 Function    : Display
 Purpose     : To display the current status of the linked list
 */
-void display()
+void display(NODE first)
 {
     NODE cur = first;
 
@@ -148,6 +165,7 @@ int main()
     int choice;
 
     printf("\n------- Singly Linked List -------\n");
+    NODE first = NULL;
 
     while(1) {
         printf("\n1.Enlink\n2.Delink\n3.Display\n4.Exit\n");
@@ -155,11 +173,11 @@ int main()
         scanf("%d", &choice);
         switch(choice)
         {
-            case 1: enlink();
+            case 1: enlink(first);
                     break;
-            case 2: delink();
+            case 2: delink(first);
                     break;
-            case 3: display();
+            case 3: display(first);
                     break;
             case 4: return 0;
             default: printf("\n>> Error: Enter Valid Option <<\n");
