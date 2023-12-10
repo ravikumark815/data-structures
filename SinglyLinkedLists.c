@@ -168,18 +168,16 @@ void display()
     NODE cur = first;
     int count = 0;
     
-    printf("%d", cur->data);
     while (cur->link != NULL){
-        printf("->%d", cur->data);
+        printf("%d->", cur->data);
         cur = cur->link;
         count++;
     }
-    printf("%d\n", (cur->link)->data);
-    printf("No. of nodes:%d", count);
+    printf("%d", cur->data);
+    printf("\nNo. of nodes:%d\n", count+1);
     
     return;
 }
-
 
 int main()
 {
