@@ -72,11 +72,10 @@ void enlink_end()
     NODE temp, cur = first;
     temp = create_node();
 
-    while(cur->link!=NULL) {
+    while(cur->link != NULL) {
         cur = cur->link;
     }
     cur->link = temp;
-    temp->link = NULL;
     printf("%d has been inserted at the end\n", temp->data);
     
     return;
@@ -89,20 +88,18 @@ Purpose     : To insert node at a given position
 void enlink_pos()
 {
     int choice, pos;
-    NODE temp, cur = first, prev = NULL;
+    NODE temp, cur = first;
     
     temp = create_node();
 
-    printf("\nEnter the value of element before which the element should be inserted\t:");
+    printf("\nEnter the value of element after which the element should be inserted\t:");
     scanf("%d", &pos);
     while (cur->data != pos) {
-        prev = cur;
         cur = cur->link;
     }
-    cur = cur->link;
-    prev->link = temp;
-    temp->link = cur;
-    printf("%d has been inserted before %d", temp->data, cur->data);
+    temp->link = cur->link;
+    cur->link = temp;
+    printf("%d has been inserted after %d", temp->data, cur->data);
     
     return;
 }
@@ -168,13 +165,14 @@ void display()
     NODE cur = first;
     int count = 0;
     
+    printf("\n");
     while (cur->link != NULL){
-        printf("%d->", cur->data);
+        printf("|%d|->", cur->data);
         cur = cur->link;
         count++;
     }
-    printf("%d", cur->data);
-    printf("\nNo. of nodes:%d\n", count+1);
+    printf("|%d|\n", cur->data);
+    printf("\nNo. of nodes: %d\n", count+1);
     
     return;
 }
@@ -183,12 +181,13 @@ int main()
 {
     int choice, enlink_choice;
 
-    printf("\n------- Singly Linked List -------\n");
+    printf("\n------- Singly Linked List -------");
 
     init_list();
     while(1) {
-        printf("\n1.Enlink\n2.Delink\n3.Display\n4.Exit\n");
-        printf("\nChoose your Option:\t");
+        printf("\n----------------------------------\n");
+        printf("1.Enlink\n2.Delink\n3.Display\n4.Exit\n");
+        printf(">> Choose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
         {
