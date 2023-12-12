@@ -60,15 +60,15 @@ void insert()
     
     temp = create_node();
 
-    if (first == NULL) {
-        first = temp;
+    if (root == NULL) {
+        root = temp;
         return;
     }
-    temp->rlink = first;
-    first = temp;
-    first->rlink->llink = temp;
+    temp->right = root;
+    root = temp;
+    root->right->left = temp;
     
-    printf("%d has been inserted at the beginning\n", first->data);    
+    printf("%d has been inserted at the beginning\n", root->data);    
     return;
 }
 
@@ -79,14 +79,14 @@ Purpose     : To delete a node from the binary tree
 
 void delete()
 {
-    NODE cur = first;
+    NODE cur = root;
     
     if (cur == NULL) {
-        printf("\n>>> Error: Linked List UnderFlow <<<\n");
+        printf("\n>>> Error: Binary Tree Empty <<<\n");
         return;
     }
-    first = first->rlink;
-    first->llink = NULL;
+    root = root->right;
+    root->left = NULL;
     free(cur);
     
     printf("\nFirst element deleted\n");
@@ -99,18 +99,18 @@ Purpose     : To display the current elements in binary tree
 */
 void display()
 {
-    if (first == NULL) {
-        printf("\n>>> Error: Linked List Underflow <<<\n");
+    if (root == NULL) {
+        printf("\n>>> Error: Binary Tree Empty <<<\n");
         return;
     }
     
-    NODE cur = first;
+    NODE cur = root;
     int count = 0;
     
     printf("\n");
-    while (cur->rlink != NULL){
+    while (cur->right != NULL){
         printf("|%d|->", cur->data);
-        cur = cur->rlink;
+        cur = cur->right;
         count++;
     }
     printf("|%d|\n", cur->data);
@@ -121,50 +121,25 @@ void display()
 
 int main()
 {
-    int choice, enlink_choice, delink_choice;
+    int choice;
+    
+    printf("\n------- Binary Trees ------\n");
 
-    printf("\n------- Doubly Linked List -------");
-
-    init_list();
-    while(1) {
-        printf("\n----------------------------------\n");
-        printf("1.Enlink\n2.Delink\n3.Display\n4.Exit\n");
-        printf(">> Choose your Option:\t");
+    while(1){
+        printf("\n---------------------\n");
+        printf("1.Insert\n2.Delete\n3.Display\n4.Exit\n");
+        printf(">> Choose your option:\t");
         scanf("%d", &choice);
         switch(choice)
         {
-            case 1: printf("\n1.Enlink at Start\n2.Enlink at End\n3.Enlink after a node\n");
-                    printf("\nChoose your Option:\t");
-                    scanf("%d", &enlink_choice);
-                    switch(enlink_choice)
-                    {
-                        case 1: enlink_start();
-                                break;
-                        case 2: enlink_end();
-                                break;
-                        case 3: enlink_pos();
-                                break;
-                        default: printf("\n>> Error: Enter Valid Option <<\n");
-                    }
+            case 1: insert();
                     break;
-            case 2: printf("\n1.Delink first\n2.Delink last\n3.Delink after a node\n");
-                    printf("\nChoose your Option:\t");
-                    scanf("%d", &delink_choice);
-                    switch(delink_choice)
-                    {
-                        case 1: delink_start();
-                                break;
-                        case 2: delink_end();
-                                break;
-                        case 3: delink_pos();
-                                break;
-                        default: printf("\n>> Error: Enter Valid Option <<\n");
-                    }
+            case 2: delete();
                     break;
             case 3: display();
                     break;
             case 4: return 0;
-            default: printf("\n>> Error: Enter Valid Option <<\n");
+            default: printf(">>> Error: Enter Valid Option <<<");
         }
     }
 }
