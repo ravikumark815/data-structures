@@ -2,7 +2,7 @@
 
 Author: https://github.com/ravikumark815
 
-------- Singly Linked Lists -------
+------- Doubly Linked Lists -------
 
 Enlink : Inserting Elements to Linked List
 Delink : Deleting Elements from Linked List
