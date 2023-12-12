@@ -110,9 +110,9 @@ void enlink_pos()
     temp->rlink = next;
     temp->llink = cur;
     cur->rlink = temp;
-    next->llink = temp;
+    if(next) next->llink = temp;
     printf("%d has been inserted after %d", temp->data, cur->data);
-    
+
     return;
 }
 
