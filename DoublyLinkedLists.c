@@ -24,7 +24,6 @@ NODE first;
 
 void init_list()
 {
-    printf("##%d\n", __LINE__);
     first = NULL;
 }
 
