@@ -24,6 +24,7 @@ NODE first;
 
 void init_list()
 {
+    printf("##%d\n", __LINE__);
     first = NULL;
 }
 
@@ -56,11 +57,16 @@ Purpose     : To insert node at the beginning of list
 void enlink_start()
 {
     NODE temp;
+    
     temp = create_node();
 
-    first->llink = temp;
+    if (first == NULL) {
+        first = temp;
+        return;
+    }
     temp->rlink = first;
     first = temp;
+    first->rlink->llink = temp;
     
     printf("%d has been inserted at the beginning\n", first->data);    
     return;
@@ -211,7 +217,7 @@ int main()
 {
     int choice, enlink_choice, delink_choice;
 
-    printf("\n------- Singly Linked List -------");
+    printf("\n------- Doubly Linked List -------");
 
     init_list();
     while(1) {
