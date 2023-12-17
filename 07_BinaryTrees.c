@@ -40,11 +40,9 @@ NODE insert(NODE root, int element)
     }
 
     if (element < root->data) {
-        printf("L\t");
         root->left = insert(root->left, element);
     }
     else if (element > root->data){
-        printf("R\t");
         root->right = insert(root->right, element);
     }
     return root;
@@ -55,20 +53,23 @@ Function    : delete
 Purpose     : To delete a node from the binary tree
 */
 
-void delete(NODE root)
+NODE delete(NODE root, int element)
 {
-    NODE cur = root;
-    
-    if (cur == NULL) {
-        printf("\n>>> Error: Binary Tree Empty <<<\n");
-        return;
+    if (root == NULL) {
+        printf("%d doesn't exist in tree.\n", element);
+        return NULL;
     }
-    root = root->right;
-    root->left = NULL;
-    free(cur);
-    
-    printf("\nFirst element deleted\n");
-    return;
+    else if (root->data == element) { 
+        printf("%d deleted.\n", root->data);
+        free(root);
+        return NULL;
+    }
+    if (element < root->data) {
+        root->left = delete(root->left, element);
+    }
+    if (element > root->data) {
+        root->right = delete(root->right, element);
+    }
 }
 
 /*
@@ -108,7 +109,9 @@ int main()
                     scanf("%d", &element);
                     root = insert(root, element);
                     break;
-            case 2: delete(root);
+            case 2: printf("Enter the element to be deleted: ");
+                    scanf("%d", &element);
+                    delete(root, element);
                     break;
             case 3: display(root, 0);
                     break;
