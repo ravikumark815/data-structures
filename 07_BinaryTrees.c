@@ -59,17 +59,23 @@ NODE delete(NODE root, int element)
         printf("%d doesn't exist in tree.\n", element);
         return NULL;
     }
-    else if (root->data == element) { 
-        printf("%d deleted.\n", root->data);
-        free(root);
-        return NULL;
-    }
     if (element < root->data) {
         root->left = delete(root->left, element);
     }
-    if (element > root->data) {
+    else if (element > root->data) {
         root->right = delete(root->right, element);
     }
+    else if (root->data == element) { 
+        if (root->left && root->right){
+
+        }
+        else if (root->left == NULL){
+            root = root->right;
+        }
+    }
+    
+    
+    
 }
 
 /*
