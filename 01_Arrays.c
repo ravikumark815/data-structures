@@ -8,11 +8,14 @@ Insert : Inserting Elements into Array
 Delete : Deleting Elements from Array
 Display : Display current elements in Array
 Search: Search an element in Array
+Reverse: Reverse all elements in Array
 
 */
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#define SWAP(a,b) a = a ^ b; b = a ^ b; a = a ^ b;
 
 int arrayInsert(int *array, int * currentSize, int * arrayCapacity)
 {
@@ -74,7 +77,7 @@ int arrayDisplay (int * array, int currentSize)
 int arraySearch (int * array, int currentSize)
 {
     if (!currentSize) {
-        printf("\nDisplay:\n>> Array Empty!\n");
+        printf("\nSearch:\n>> Array Empty!\n");
         return 0;
     }
     
@@ -93,6 +96,21 @@ int arraySearch (int * array, int currentSize)
     return 0;
 }
 
+int arrayReverse (int * array, int currentSize)
+{
+    if (!currentSize) {
+        printf("\nReverse:\n>> Array Empty!\n");
+        return 0;
+    }
+    
+    for (int i = 0, j = (currentSize - 1); i < j; i++, j--) {
+        SWAP(array[i], array[j]);
+    }
+    printf("\nArray Reversed Successfully");
+    arrayDisplay(array, currentSize);
+    return 0;
+}
+
 int main()
 {
     int currentSize = 0, choice = 0;
@@ -103,7 +121,7 @@ int main()
     printf("------- Array -------");
     while(1){
         printf("\n---------------------\n");
-        printf("1.Insert\n2.Delete\n3.Display\n4.Search\n5.Exit\n");
+        printf("1.Insert\n2.Delete\n3.Display\n4.Search\n5.Reverse\n6.Exit\n");
         printf("\nChoose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -116,7 +134,9 @@ int main()
                     break;
             case 4: arraySearch(array, currentSize);
                     break;
-            case 5: return 0;
+            case 5: arrayReverse(array, currentSize);
+                    break;
+            case 6: return 0;
             default: printf("\n>> Error: Enter Valid Option! <<\n");
         }
     }
