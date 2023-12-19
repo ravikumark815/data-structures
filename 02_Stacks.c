@@ -63,6 +63,27 @@ void display (int *stack)
     return;
 }
 
+void search (int *stack)
+{
+    int i = 0, element;
+    
+    if (top == -1) {
+        printf("\n >>> Error: Stack UnderFlow! <<<\n");
+        return;
+    }
+    else {
+        printf("Enter the Element to be searched:\t");
+        scanf("%d", &element);
+        for (i = 0; i <= top; i++) {
+            if (stack[i] == element) {
+                printf("%d found at index: %d", stack[i], i);
+                return;
+            }
+        }
+    }
+    return;
+}
+
 int main()
 {
     int choice;
@@ -74,7 +95,7 @@ int main()
 
     while(1){
         printf("\n---------------------\n");
-        printf("1.Enstack\n2.Destack\n3.Display\n4.Exit\n");
+        printf("1.Enstack\n2.Destack\n3.Display\n4.Search\n5.Exit\n");
         printf(">> Choose your option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -85,7 +106,9 @@ int main()
                     break;
             case 3: display(stack);
                     break;
-            case 4: return 0;
+            case 4: search(stack);
+                    break;
+            case 5: return 0;
             default: printf(">>> Error: Enter Valid Option <<<");
         }
     }
