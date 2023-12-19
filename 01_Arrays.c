@@ -4,9 +4,10 @@ Author: https://github.com/ravikumark815
 
 ------- Array -------
 
-Enqueue : Inserting Elements into Array
-Dequeue : Deleting Elements from Array
+Insert : Inserting Elements into Array
+Delete : Deleting Elements from Array
 Display : Display current elements in Array
+Search: Search an element in Array
 
 */
 
@@ -64,9 +65,31 @@ int arrayDisplay (int * array, int currentSize)
     printf("\nDisplay:\n|");
     for (int i = 0; i < currentSize; i++)
     {
-        printf("%d\t|", array[i]);
+        printf("%d|", array[i]);
     }
     printf("\n");
+    return 0;
+}
+
+int arraySearch (int * array, int currentSize)
+{
+    if (!currentSize) {
+        printf("\nDisplay:\n>> Array Empty!\n");
+        return 0;
+    }
+    
+    int element;
+
+    printf("Enter the Element to be searched:\t");
+    scanf("%d", &element);
+
+    for (int i = 0; i < currentSize; i++) {
+        if (array[i] == element) {
+            printf("%d found at index: %d", array[i], i);
+            return 0;
+        }
+    }
+    printf("%d not found in the array", element);
     return 0;
 }
 
@@ -80,7 +103,7 @@ int main()
     printf("------- Array -------");
     while(1){
         printf("\n---------------------\n");
-        printf("1.Insert\n2.Delete\n3.Display\n4.Exit\n");
+        printf("1.Insert\n2.Delete\n3.Display\n4.Search\n5.Exit\n");
         printf("\nChoose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -91,7 +114,9 @@ int main()
                     break;
             case 3: arrayDisplay(array, currentSize);
                     break;
-            case 4: return 0;
+            case 4: arraySearch(array, currentSize);
+                    break;
+            case 5: return 0;
             default: printf("\n>> Error: Enter Valid Option! <<\n");
         }
     }
