@@ -7,9 +7,13 @@ Author: https://github.com/ravikumark815
 Enstack : Pushing Elements to Stack
 Destack : Popping Elements from Stack
 Display : Display current elements in Stack
+Search  : Search for an element in Stack
+Reverse  : Reverse all elements in Stack
 
 */
 #include <stdio.h>
+
+#define SWAP(a,b) a = a ^ b; b = a ^ b; a = a ^ b;
 
 int top = -1;
 int size =  0;
@@ -84,6 +88,21 @@ void search (int *stack)
     return;
 }
 
+void reverse (int * stack)
+{
+    if (top == -1) {
+        printf("\n >>> Error: Stack UnderFlow! <<<\n");
+        return;
+    }
+    
+    for (int i = 0, j = (top); i < j; i++, j--) {
+        SWAP(stack[i], stack[j]);
+    }
+    printf("\nStack Reversed Successfully");
+    display(stack);
+    return;
+}
+
 int main()
 {
     int choice;
@@ -95,7 +114,7 @@ int main()
 
     while(1){
         printf("\n---------------------\n");
-        printf("1.Enstack\n2.Destack\n3.Display\n4.Search\n5.Exit\n");
+        printf("1.Enstack\n2.Destack\n3.Display\n4.Search\n5.Reverse\n6.Exit\n");
         printf(">> Choose your option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -108,7 +127,9 @@ int main()
                     break;
             case 4: search(stack);
                     break;
-            case 5: return 0;
+            case 5: reverse(stack);
+                    break;
+            case 6: return 0;
             default: printf(">>> Error: Enter Valid Option <<<");
         }
     }
