@@ -73,9 +73,6 @@ NODE delete(NODE root, int element)
             root = root->right;
         }
     }
-    
-    
-    
 }
 
 /*
