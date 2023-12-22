@@ -4,9 +4,10 @@ Author: https://github.com/ravikumark815
 
 ------- Singly Linked Lists -------
 
-Enlink : Inserting Elements to Linked List
-Delink : Deleting Elements from Linked List
+Enlink  : Inserting Elements to Linked List
+Delink  : Deleting Elements from Linked List
 Display : Display current elements in Linked List
+Search  : Search for an element in Linked List
 
 */
 #include <stdio.h>
@@ -19,12 +20,6 @@ struct node
 };
 
 typedef struct node* NODE; // Declare a type named NODE for easy use
-NODE first;
-
-void init_list()
-{
-    first = NULL;
-}
 
 /*
 Function    : create_node
@@ -36,7 +31,7 @@ NODE create_node()
     NODE temp;
     temp = (NODE)malloc(sizeof(struct node));
     
-    printf("Enter the element to Enlink:\t");
+    printf("\nEnter the element to Enlink:\t");
     scanf("%d", &data);
     if (temp == NULL) {
         printf(">>> Error: Insufficient Memory\n");
@@ -47,8 +42,9 @@ NODE create_node()
     return temp;
 }
 
+NODE linked_list = NULL;
 /*
-Function    : enlink_first
+Function    : enlink_start
 Purpose     : To insert node at the beginning of list
 */
 void enlink_start()
@@ -56,10 +52,16 @@ void enlink_start()
     NODE temp;
     temp = create_node();
 
-    temp->link = first;
-    first = temp;
+
+    if (linked_list == NULL) {
+        linked_list = temp;
+    }
+    else {
+        temp->link = linked_list;
+        linked_list = temp;
+    }
     
-    printf("%d has been inserted at the beginning\n", first->data);    
+    printf("%d has been inserted at the beginning\n", linked_list->data);    
     return;
 }
 
@@ -69,7 +71,7 @@ Purpose     : To insert node at the end of list
 */
 void enlink_end()
 {
-    NODE temp, cur = first;
+    NODE temp, cur = linked_list;
     temp = create_node();
 
     while(cur->link != NULL) {
@@ -88,7 +90,7 @@ Purpose     : To insert node at a given position
 void enlink_pos()
 {
     int choice, pos;
-    NODE temp, cur = first;
+    NODE temp, cur = linked_list;
     
     temp = create_node();
 
@@ -105,18 +107,18 @@ void enlink_pos()
 }
 
 /*
-Function    : delink_first
+Function    : delink_start
 Purpose     : To delete node at the beginning of list
 */
 void delink_start()
 {
-    NODE cur = first;
+    NODE cur = linked_list;
     
     if (cur == NULL) {
         printf("\n>>> Error: Linked List UnderFlow <<<\n");
         return;
     }
-    first = first->link;
+    linked_list = linked_list->link;
     free(cur);
     
     printf("\nFirst element deleted\n");
@@ -129,7 +131,7 @@ Purpose     : To delete node at the end of list
 */
 void delink_end()
 {
-    NODE cur = first, prev = NULL;
+    NODE cur = linked_list, prev = NULL;
     
     if (cur == NULL) {
         printf("\n>>> Error: Linked List UnderFlow <<<\n");
@@ -153,7 +155,7 @@ Purpose     : To delete a node after given pos
 void delink_pos()
 {
     int choice, pos;
-    NODE cur = first, temp = NULL;
+    NODE cur = linked_list, temp = NULL;
 
     
     if (cur == NULL) {
@@ -178,12 +180,12 @@ Purpose     : To display the current status of the linked list
 */
 void display()
 {
-    if (first == NULL) {
+    if (linked_list == NULL) {
         printf("\n>>> Error: Linked List Underflow <<<\n");
         return;
     }
     
-    NODE cur = first;
+    NODE cur = linked_list;
     int count = 0;
     
     printf("\n");
@@ -198,16 +200,68 @@ void display()
     return;
 }
 
+void search()
+{
+    if (linked_list == NULL) {
+        printf("\n>>> Error: Linked List Empty <<<\n");
+        return;
+    }
+
+    NODE cur = linked_list;
+    int element, count = 0;
+
+    printf("Enter element to be searched: ");
+    scanf("%d", &element);
+
+    while (cur) {
+        if (cur->data == element) {
+            printf("%d found at node %d\n", cur->data, count);
+            return;
+        }
+        cur = cur->link;
+        count++;
+    }
+    printf("%d not found in linked list\n", element);
+    return;
+}
+
+void reverse()
+{
+    if (linked_list == NULL) {
+        printf("\n>>> Error: Linked List Empty <<<\n");
+        return;
+    }
+    
+    if (linked_list->link == NULL) {
+        printf("\nOnly one element found. Skipping Reverse.\n");
+        return;
+    }
+
+    NODE prev = NULL, cur = linked_list, next = NULL;
+
+    while (cur) {
+        next = cur->link;
+        cur->link = prev;
+        prev = cur;
+        cur = next;
+    }
+    linked_list = prev;
+    printf("Linked List reversed successfully\n");
+    display();
+    return;
+}
+
 int main()
 {
     int choice, enlink_choice, delink_choice;
 
     printf("\n------- Singly Linked List -------");
 
-    init_list();
+    linked_list = create_node();
+
     while(1) {
         printf("\n----------------------------------\n");
-        printf("1.Enlink\n2.Delink\n3.Display\n4.Exit\n");
+        printf("1.Enlink\n2.Delink\n3.Display\n4.Search\n5.Reverse\n6.Exit\n");
         printf(">> Choose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -226,7 +280,7 @@ int main()
                         default: printf("\n>> Error: Enter Valid Option <<\n");
                     }
                     break;
-            case 2: printf("\n1.Delink first\n2.Delink last\n3.Delink after a node\n");
+            case 2: printf("\n1.Delink start\n2.Delink end\n3.Delink after a node\n");
                     printf("\nChoose your Option:\t");
                     scanf("%d", &delink_choice);
                     switch(delink_choice)
@@ -242,7 +296,11 @@ int main()
                     break;
             case 3: display();
                     break;
-            case 4: return 0;
+            case 4: search();
+                    break;
+            case 5: reverse();
+                    break;
+            case 6: return 0;
             default: printf("\n>> Error: Enter Valid Option <<\n");
         }
     }
