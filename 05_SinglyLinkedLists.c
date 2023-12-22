@@ -8,6 +8,7 @@ Enlink  : Inserting Elements to Linked List
 Delink  : Deleting Elements from Linked List
 Display : Display current elements in Linked List
 Search  : Search for an element in Linked List
+Reverse : Reverse all elements in Linked List
 
 */
 #include <stdio.h>
