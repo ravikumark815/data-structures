@@ -15,6 +15,8 @@ int rear = -1;
 int front = 0;
 int size = 0;
 
+#define SWAP(a,b) a=a^b; b=a^b; a=a^b;
+
 void enqueue(int *queue)
 {
     int elem;
@@ -66,6 +68,43 @@ void display(int *queue)
     return;
 }
 
+void search (int *queue)
+{
+    int i = 0, element;
+    
+    if (rear < front) {
+        printf("front:%d, rear:%d", front, rear);
+        printf("\n>>> Error: Queue Empty <<<\n");
+        return;
+    }
+    printf("Enter the Element to be searched:\t");
+    scanf("%d", &element);
+    for (i = front; i <= rear; i++) {
+        if (queue[i] == element) {
+            printf("%d found at index: %d", queue[i], i);
+            return;
+        }
+    }
+    printf(">>> %d not found in the queue\n", element);
+    return;
+}
+
+void reverse (int * queue)
+{
+    if (rear < front) {
+        printf("front:%d, rear:%d", front, rear);
+        printf("\n>>> Error: Queue Empty <<<\n");
+        return;
+    }
+    
+    for (int i = front, j = (rear); i < j; i++, j--) {
+        SWAP(queue[i], queue[j]);
+    }
+    printf("\nQueue Reversed Successfully");
+    display(queue);
+    return;
+}
+
 int main()
 {
     int choice;
@@ -76,7 +115,8 @@ int main()
     int queue[size];
 
     while(1) {
-        printf("\n1.Enqueue\n2.Dequeue\n3.Display\n4.Exit\n");
+        printf("--------------------");
+        printf("\n1.Enqueue\n2.Dequeue\n3.Display\n4.Search\n5.Reverse\n6.Exit\n");
         printf("\nChoose your option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -87,7 +127,11 @@ int main()
                     break;
             case 3: display(queue);
                     break;
-            case 4: return 0;
+            case 4: search(queue);
+                    break;
+            case 5: reverse(queue);
+                    break;
+            case 6: return 0;
             default: printf("\n>> Error: Enter Valid Option <<\n");
         }
     }
