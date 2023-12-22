@@ -4,9 +4,11 @@ Author: https://github.com/ravikumark815
 
 ------- Doubly Linked Lists -------
 
-Enlink : Inserting Elements to Linked List
-Delink : Deleting Elements from Linked List
+Enlink  : Inserting Elements to Linked List
+Delink  : Deleting Elements from Linked List
 Display : Display current elements in Linked List
+Search  : Search for an element in Linked List
+Reverse : Reverse all elements in Linked List
 
 */
 #include <stdio.h>
@@ -20,12 +22,8 @@ struct node
 };
 
 typedef struct node* NODE; // Declare a type named NODE for easy use
-NODE first;
 
-void init_list()
-{
-    first = NULL;
-}
+NODE linked_list = NULL;
 
 /*
 Function    : create_node
@@ -59,15 +57,15 @@ void enlink_start()
     
     temp = create_node();
 
-    if (first == NULL) {
-        first = temp;
+    if (linked_list == NULL) {
+        linked_list = temp;
         return;
     }
-    temp->rlink = first;
-    first = temp;
-    first->rlink->llink = temp;
+    temp->rlink = linked_list;
+    linked_list = temp;
+    linked_list->rlink->llink = temp;
     
-    printf("%d has been inserted at the beginning\n", first->data);    
+    printf("%d has been inserted at the beginning\n", linked_list->data);    
     return;
 }
 
@@ -77,7 +75,7 @@ Purpose     : To insert node at the end of list
 */
 void enlink_end()
 {
-    NODE temp, cur = first;
+    NODE temp, cur = linked_list;
     temp = create_node();
 
     while(cur->rlink != NULL) {
@@ -97,7 +95,7 @@ Purpose     : To insert node at a given position
 void enlink_pos()
 {
     int choice, pos;
-    NODE temp, cur = first, next;
+    NODE temp, cur = linked_list, next;
     
     temp = create_node();
 
@@ -122,14 +120,14 @@ Purpose     : To delete node at the beginning of list
 */
 void delink_start()
 {
-    NODE cur = first;
+    NODE cur = linked_list;
     
     if (cur == NULL) {
         printf("\n>>> Error: Linked List UnderFlow <<<\n");
         return;
     }
-    first = first->rlink;
-    first->llink = NULL;
+    linked_list = linked_list->rlink;
+    linked_list->llink = NULL;
     free(cur);
     
     printf("\nFirst element deleted\n");
@@ -142,7 +140,7 @@ Purpose     : To delete node at the end of list
 */
 void delink_end()
 {
-    NODE cur = first, prev = NULL;
+    NODE cur = linked_list, prev = NULL;
     
     if (cur == NULL) {
         printf("\n>>> Error: Linked List UnderFlow <<<\n");
@@ -166,7 +164,7 @@ Purpose     : To delete a node after given pos
 void delink_pos()
 {
     int choice, pos;
-    NODE cur = first, next = NULL;
+    NODE cur = linked_list, next = NULL;
 
     
     if (cur == NULL) {
@@ -192,12 +190,12 @@ Purpose     : To display the current status of the linked list
 */
 void display()
 {
-    if (first == NULL) {
+    if (linked_list == NULL) {
         printf("\n>>> Error: Linked List Underflow <<<\n");
         return;
     }
     
-    NODE cur = first;
+    NODE cur = linked_list;
     int count = 0;
     
     printf("\n");
@@ -212,16 +210,76 @@ void display()
     return;
 }
 
+/*
+Function    : Search
+Purpose     : To search for an element in the linkedlist
+*/
+void search()
+{
+    if (linked_list == NULL) {
+        printf("\n>>> Error: Linked List Empty <<<\n");
+        return;
+    }
+    
+    NODE cur = linked_list;
+    int count = 0, element;
+    
+    printf("\nEnter the element to be searched: ");
+    scanf("%d", &element);
+
+    while (cur->rlink != NULL){
+        if (cur->data == element) {
+            printf("%d found at node %d\n", cur->data, count);
+            return;
+        }
+        cur = cur->rlink;
+        count++;
+    }
+    
+    printf("%d not found in linked list\n", element);
+    return;
+}
+
+/*
+Function    : Reverse
+Purpose     : To reverse all elements in linkedlist
+*/
+void reverse()
+{
+    if (linked_list == NULL) {
+        printf("\n>>> Error: Linked List Empty <<<\n");
+        return;
+    }
+    if (linked_list->rlink == NULL) {
+        printf("\nOnly one element found. Skipping Reverse.\n");
+        return;
+    }
+
+    NODE prev = NULL, cur = linked_list, next = NULL;
+    
+    while (cur){
+        next = cur->rlink;
+        cur->rlink = prev;
+        cur->llink = next;
+        prev = cur;
+        cur = next;
+    }
+    linked_list = prev;
+    
+    printf("Linked List reversed successfully\n");
+    display();
+    return;
+}
+
 int main()
 {
     int choice, enlink_choice, delink_choice;
 
     printf("\n------- Doubly Linked List -------");
 
-    init_list();
     while(1) {
         printf("\n----------------------------------\n");
-        printf("1.Enlink\n2.Delink\n3.Display\n4.Exit\n");
+        printf("1.Enlink\n2.Delink\n3.Display\n4.Search\n5.Reverse\n6.Exit\n");
         printf(">> Choose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -256,7 +314,11 @@ int main()
                     break;
             case 3: display();
                     break;
-            case 4: return 0;
+            case 4: search();
+                    break;
+            case 5: reverse();
+                    break;
+            case 6: return 0;
             default: printf("\n>> Error: Enter Valid Option <<\n");
         }
     }
