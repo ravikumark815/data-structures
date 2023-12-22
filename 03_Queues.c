@@ -7,6 +7,8 @@ Author: https://github.com/ravikumark815
 Enqueue : Pushing Elements to Queue
 Dequeue : Popping Elements from Queue
 Display : Display current elements in Queue
+Search  : Search for an element in Queue
+Reverse : Reverse all elements in Queue
 
 */
 #include <stdio.h>
