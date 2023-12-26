@@ -4,11 +4,15 @@ Author: https://github.com/ravikumark815
 
 ------- Binary Trees -------
 
-Insert  : Inserting Elements to Binary Tree
-Delete  : Deleting Elements from Binary Tree
-Display : Display current elements in Binary Tree
-findMax : Returns highest element of the tree
-findMin : Returns lowest element of the tree
+Insert              : Inserting Elements to Binary Tree
+Delete              : Deleting Elements from Binary Tree
+Display             : Display current elements in Binary Tree
+findMax             : Returns highest element of the tree
+findMin             : Returns lowest element of the tree
+findHeight          : Find the Height of the tree
+inorder_traversal   : Inorder traversal of the tree
+preorder_traversal  : Preorder traversal of the tree
+postorder_traversal : Postorder traversal of the tree
 
 */
 #include <stdio.h>
@@ -199,7 +203,7 @@ int main()
     NODE root = NULL;
     while(1){
         printf("\n---------------------\n");
-        printf("\n0.Use random tree\n"
+        printf("\n0.Preload Tree\n"
                 "1.Insert\n"
                 "2.Delete\n"
                 "3.Display\n"
