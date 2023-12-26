@@ -123,11 +123,26 @@ void display(NODE root, int level)
 
     display(root->right, level + 1);
     for (int i = 0; i < level; ++i) {
-        printf("  ");
+        printf("   ");
     }
     printf("%d\n", root->data);
 
     display(root->left, level + 1);
+}
+
+/*
+Function    : findHeight
+Purpose     : To find the height of a binary tree
+*/
+int findHeight(NODE root)
+{
+    if(root == NULL) {
+        return 0;
+    }
+    int left_height = findHeight(root->left);
+    int right_height = findHeight(root->right);
+
+    return ((left_height > right_height)? (left_height + 1): (right_height + 1));
 }
 
 int main()
@@ -139,7 +154,7 @@ int main()
     NODE root = NULL;
     while(1){
         printf("\n---------------------\n");
-        printf("1.Insert\n2.Delete\n3.Display\n4.Highest Element\n5.Lowest Element\n6.Exit\n");
+        printf("1.Insert\n2.Delete\n3.Display\n4.Highest Element\n5.Lowest Element\n6.Height of the Tree\n7.Exit\n");
         printf(">> Choose your option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -154,11 +169,13 @@ int main()
                     break;
             case 3: display(root, 0);
                     break;
-            case 4: printf("Highest Element is %d:", findMax(root)->data);
+            case 4: printf("Highest Element: %d", findMax(root)->data);
                     break;
-            case 5: printf("Lowest Element is %d:", findMax(root)->data);
+            case 5: printf("Lowest Element: %d", findMin(root)->data);
                     break;
-            case 6: return 0;
+            case 6: printf("Height: %d", findHeight(root));
+                    break;
+            case 7: return 0;
             default: printf(">>> Error: Enter Valid Option <<<");
         }
     }
