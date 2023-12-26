@@ -145,6 +145,51 @@ int findHeight(NODE root)
     return ((left_height > right_height)? (left_height + 1): (right_height + 1));
 }
 
+/*
+Function    : inorder_traversal
+Purpose     : To find the inorder traversal of a binary tree
+*/
+void inorder_traversal(NODE root)
+{
+    if(root == NULL)
+        return;
+    inorder_traversal(root->left);
+    printf("%d ", root->data);
+    inorder_traversal(root->right);
+
+    return;
+}
+
+/*
+Function    : preorder_traversal
+Purpose     : To find the preorder traversal of a binary tree
+*/
+void preorder_traversal(NODE root)
+{
+    if(root == NULL)
+        return;
+    printf("%d ", root->data);
+    preorder_traversal(root->left);
+    preorder_traversal(root->right);
+
+    return;
+}
+
+/*
+Function    : postorder_traversal
+Purpose     : To find the preorder traversal of a binary tree
+*/
+void postorder_traversal(NODE root)
+{
+    if(root == NULL)
+        return;
+    postorder_traversal(root->left);
+    postorder_traversal(root->right);
+    printf("%d ", root->data);
+
+    return;
+}
+
 int main()
 {
     int choice, element;
@@ -154,11 +199,37 @@ int main()
     NODE root = NULL;
     while(1){
         printf("\n---------------------\n");
-        printf("1.Insert\n2.Delete\n3.Display\n4.Highest Element\n5.Lowest Element\n6.Height of the Tree\n7.Exit\n");
+        printf("\n0.Use random tree\n"
+                "1.Insert\n"
+                "2.Delete\n"
+                "3.Display\n"
+                "4.Highest Element\n"
+                "5.Lowest Element\n"
+                "6.Height of the Tree\n"
+                "7.Inorder Traversal\n"
+                "8.Preorder Traversal\n"
+                "9.Postorder Traversal\n"
+            );
         printf(">> Choose your option:\t");
         scanf("%d", &choice);
         switch(choice)
         {
+            case 0: root = insert(root, 100);
+                    root = insert(root, 50);
+                    root = insert(root, 150);
+                    root = insert(root, 30);
+                    root = insert(root, 70);
+                    root = insert(root, 130);
+                    root = insert(root, 170);
+                    root = insert(root, 20);
+                    root = insert(root, 40);
+                    root = insert(root, 60);
+                    root = insert(root, 80);
+                    root = insert(root, 110);
+                    root = insert(root, 140);
+                    root = insert(root, 160);
+                    root = insert(root, 180);
+                    break; 
             case 1: printf("Enter the element to be inserted: ");
                     scanf("%d", &element);
                     root = insert(root, element);
@@ -175,8 +246,13 @@ int main()
                     break;
             case 6: printf("Height: %d", findHeight(root));
                     break;
-            case 7: return 0;
-            default: printf(">>> Error: Enter Valid Option <<<");
+            case 7: inorder_traversal(root);
+                    break;
+            case 8: preorder_traversal(root);
+                    break;
+            case 9: postorder_traversal(root);
+                    break;
+            default: return 0;
         }
     }
 }
