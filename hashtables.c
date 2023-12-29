@@ -114,21 +114,24 @@ Purpose     : Search for an element in hashtable
 */
 void search(struct HashTable* hashtable)
 {   
-    int key, index = create_hash(key, hashtable->table_size);
+    int key;
 
     printf("\nEnter the key to be deleted: ");
     scanf("%d", &key);
 
+    int index = create_hash(key, hashtable->table_size);
+
     struct node* temp = hashtable->table[index];
-    if (hashtable->table[index] == NULL)
-        printf(">> Element Not Found\n");
-        return;
     
     while(temp != NULL){
-        if (temp->key == key)
+        if (temp->key == key) {
             printf("\nElement found at Index:%d Key:%d Value:%d", index, temp->key, temp->val);
+            return;
+        }
+        temp = temp->link;
     }
     
+    printf(">> Error: Element not found\n");
     return;
 }
 
@@ -145,7 +148,7 @@ void delete(struct HashTable* hashtable)
 
     index = create_hash(key, hashtable->table_size);
 
-    struct node* prev;
+    struct node* prev = NULL;
     struct node* temp = hashtable->table[index];
     
     if (hashtable->table[index] == NULL)
@@ -153,10 +156,11 @@ void delete(struct HashTable* hashtable)
     
     while(temp != NULL){
         if (temp->key == key) {
-            if (temp->link)
+            if (prev == NULL) { // If the element to delete is the first node
+                hashtable->table[index] = temp->link;
+            } else {
                 prev->link = temp->link;
-            else
-                prev->link = NULL;
+            }
             free(temp);
             printf("Deletion Successful\n");
             return;
@@ -176,8 +180,6 @@ Purpose     : Display all elements in hash table
 void display(struct HashTable* hashtable)
 {   
     printf("\nDisplay:\n");
-    int count = 0;
-    // struct node* temp = hashtable->table[i];
 
     for (int i = 0; i < hashtable->table_size; i++) {
         printf("\nIndex [%d]: ", i);
@@ -203,7 +205,7 @@ int main()
     
     while(1) {
         printf("\n----------------------------------\n");
-        printf("1.Insert\n2.Delete\n3.Display\n");
+        printf("1.Insert\n2.Delete\n3.Display\n4.Search\n");
         printf(">> Choose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -213,6 +215,8 @@ int main()
             case 2: delete(hashtable);
                     break;
             case 3: display(hashtable);
+                    break;
+            case 4: search(hashtable);
                     break;
             default: return 0;
         }
