@@ -109,11 +109,63 @@ void insert(struct HashTable* hashtable)
 }
 
 /*
+Function    : Search
+Purpose     : Search for an element in hashtable
+*/
+void search(struct HashTable* hashtable)
+{   
+    int key, index = create_hash(key, hashtable->table_size);
+
+    printf("\nEnter the key to be deleted: ");
+    scanf("%d", &key);
+
+    struct node* temp = hashtable->table[index];
+    if (hashtable->table[index] == NULL)
+        printf(">> Element Not Found\n");
+        return;
+    
+    while(temp != NULL){
+        if (temp->key == key)
+            printf("\nElement found at Index:%d Key:%d Value:%d", index, temp->key, temp->val);
+    }
+    
+    return;
+}
+
+/*
 Function    : Delete
 Purpose     : Deletes a person from hash table
 */
-void delete()
+void delete(struct HashTable* hashtable)
 {   
+    int key, index;
+    
+    printf("\nEnter the key to be deleted: ");
+    scanf("%d", &key);
+
+    index = create_hash(key, hashtable->table_size);
+
+    struct node* prev;
+    struct node* temp = hashtable->table[index];
+    
+    if (hashtable->table[index] == NULL)
+        printf(">> Element Not Found\n");
+    
+    while(temp != NULL){
+        if (temp->key == key) {
+            if (temp->link)
+                prev->link = temp->link;
+            else
+                prev->link = NULL;
+            free(temp);
+            printf("Deletion Successful\n");
+            return;
+        }
+        prev = temp;
+        temp = temp->link;
+    }
+    
+    printf(">> Element Not Found\n");
     return;
 }
 
@@ -158,7 +210,7 @@ int main()
         {
             case 1: insert(hashtable);
                     break;
-            case 2: delete();
+            case 2: delete(hashtable);
                     break;
             case 3: display(hashtable);
                     break;
