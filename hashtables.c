@@ -13,62 +13,65 @@ Display : Display all elements in hash table
 #include <stdlib.h>
 #include <string.h>
 
-// Structure to hold information about a person
-struct person {
-    char name[50];
-    int age;
-    struct person *link;
+// Structure to represent each data element stored
+struct node {
+    int key;
+    int val;
+    struct node *link;
 };
 
 // Structure to represent the hash table
 struct HashTable {
-    struct person **table; // Pointer to an array of pointers to persons
-    int size; // Size of the hash table
+    struct node **table; // Pointer to an array of pointers
+    int table_size; // Maximum size of the hash table
+    int cur_size; // Current size of the hash table
+
 };
 
 /*
 Function    : create_hash
 Purpose     : Hash function: Converts a string (name) into an index within the hash table
 */
-int create_hash(char *name, int table_size)
+int create_hash(int key, int table_size)
 {
-    return ('z'-name[0])%table_size;
+    return (key) % table_size;
 }
 
 /*
-Function    : create_person
-Purpose     : To create a new person with given name and age
+Function    : create_node
+Purpose     : To create a new data node
 */
-struct person* create_person()
+struct node* create_node()
 {
-    struct person* new_person = (struct person*)malloc(sizeof(struct person));
+    struct node* new_node = (struct node*)malloc(sizeof(struct node));
 
-    if (new_person == NULL) {
+    if (new_node == NULL) {
         printf(">>> Error: Insufficient Memory\n");
         exit (0);
     }
 
-    int age;
-    char name[50];
+    int key, val;
     
-    printf("\nEnter the name of the person:\t");
-    scanf("%s", name);
-    printf("Enter the age of the person:\t");
-    scanf("%d", &age);
+    printf("\nEnter the Key:\t");
+    scanf("%d", &key);
+    printf("Enter the element to be inserted:\t");
+    scanf("%d", &val);
     
-    strcpy(new_person->name, name);
-    new_person->age = age;
+    new_node->key = key;
+    new_node->val = val;
     
-    return new_person;
+    return new_node;
 }
 
 /*
 Function    : init_hashtable
 Purpose     : Initializes the hash table with a specified size
 */
-void init_hashtable(struct HashTable* hashtable, int table_size) {
-    hashtable->size = table_size; // Assign the specified size to the hash table
-    hashtable->table = (struct person**)malloc(table_size*sizeof(struct person*));
+void init_hashtable(struct HashTable* hashtable, int table_size) 
+{
+    hashtable->table_size = table_size;
+    hashtable->cur_size = 0;
+    hashtable->table = (struct node**)malloc(table_size*sizeof(struct person*));
     if (hashtable->table == NULL) {
         printf(">>> Error: Insufficient Memory\n");
         exit (0);
@@ -85,24 +88,23 @@ Purpose     : Inserts a new person into the hash table
 */
 void insert(struct HashTable* hashtable)
 {   
-    struct person* new_person = create_person();
-    printf("##%d\n", __LINE__);
-    unsigned int new_person_hash_index = create_hash(new_person->name, hashtable->size);
-    printf("##%d\n", __LINE__);
+    struct node* new_node = create_node(); // Create a new data elem
+    unsigned int index = create_hash(new_node->key, hashtable->table_size); // Generate hash key for this elem
+    printf("Hash obtained:%d\n", index);
 
-    if (hashtable->table[new_person_hash_index] == NULL) {
-        printf("##%d\n", __LINE__);
-        hashtable->table[new_person_hash_index] = new_person;
+    if (hashtable->table[index] == NULL) {
+        hashtable->table[index] = new_node; // Insert into the obtained index, if its NULL
     }
     else {
         printf("##%d\n", __LINE__);
         // If collision occurs (slot is not empty), handle it using separate chaining
-        struct person* temp = hashtable->table[new_person_hash_index];
+        struct node* temp = hashtable->table[index];
         while (temp->link != NULL) { // Move to the end of the chain
             temp = temp->link;
         }
-        temp->link = new_person; // Add the new person at the end of the chain
+        temp->link = new_node; // Add the new person at the end of the chain
     }
+    hashtable->cur_size++;
     return;
 }
 
@@ -122,11 +124,14 @@ Purpose     : Display all elements in hash table
 void display(struct HashTable* hashtable)
 {   
     printf("\nDisplay:\n");
-    for (int i=0; i<hashtable->size; i++) {
+    int count = 0;
+    // struct node* temp = hashtable->table[i];
+
+    for (int i = 0; i < hashtable->table_size; i++) {
         printf("\nIndex [%d]: ", i);
-        struct person* temp = hashtable->table[i];
+        struct node* temp = hashtable->table[i];
         while(temp != NULL) {
-            printf("%s, %d", temp->name, temp->age);
+            printf("(%d, %d) ", temp->key, temp->val);
             temp = temp->link;
         }
     }
