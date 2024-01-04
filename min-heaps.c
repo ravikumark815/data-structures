@@ -51,17 +51,15 @@ void minHeapify (struct minHeap* heap, int index)
     int left_index = getLeftChildIndex(index);
     int right_index = getRightChildIndex(index);
 
-    if (heap->array[index] > heap->array[left_index]){
-        SWAP(heap->array[index], heap->array[left_index]);
-        index = left_index;
-    }
-    if (heap->array[index] > heap->array[right_index]){
-        SWAP(heap->array[index], heap->array[right_index]);
-        index = right_index;
-    }
+    if ((left_index < heap->cur_size) && (heap->array[left_index] < heap->array[smallest]))
+        smallest = left_index;
+    if ((right_index < heap->cur_size) && (heap->array[right_index] < heap->array[smallest]))
+        smallest = right_index;
 
-    if (smallest != index)
-        minHeapify(heap, index);
+    if (smallest != index) {
+        SWAP(heap->array[index], heap->array[smallest]);
+        minHeapify(heap, smallest);
+    }
     return;
 }
 
@@ -103,11 +101,12 @@ void minHeapDelete (struct minHeap * heap)
         return;
     }
 
-    heap->array[0] = heap->array[heap->cur_size];
+    heap->array[0] = heap->array[heap->cur_size - 1];
     heap->cur_size--;
 
     minHeapify(heap, 0);
 
+    printf("Deletion Successful\n");
     return;
 }
 
@@ -135,7 +134,7 @@ int main()
     struct minHeap* heap = create_heap (capacity);
     while(1){
         printf("\n---------------------\n");
-        printf("1.Insert\n2.Delete\n3.Display\n4.Search\n");
+        printf("1.Insert\n2.Delete\n3.Display\n");
         printf("\nChoose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
