@@ -54,12 +54,11 @@ void maxHeapify(struct maxHeap *heap, int index)
     int left_index = getLeftChildIndex(index);
     int right_index = getRightChildIndex(index);
 
-    if((left_index < heap->cur_size) && (heap->array[left_index] > heap->array[largest])) {
+    if((left_index < heap->cur_size) && (heap->array[left_index] > heap->array[largest]))
         largest = left_index;
-    }
-    if((right_index < heap->cur_size) && (heap->array[right_index] > heap->array[largest])) {
+    if((right_index < heap->cur_size) && (heap->array[right_index] > heap->array[largest]))
         largest = right_index;
-    }
+    
     if (largest != index) {
         SWAP(heap->array[index], heap->array[largest]);
         maxHeapify(heap, largest);
@@ -85,15 +84,16 @@ void maxHeapInsert(struct maxHeap *heap)
         printf(">> %d inserted into heap successfully\n", elem);
         return;
     }
-    heap->cur_size++;
-    int index = heap->cur_size - 1;
+    
+    int index = heap->cur_size;
     heap->array[index] = elem;
     while ((index > 0) && (heap->array[getParentIndex(index)] < heap->array[index])) {
         SWAP(heap->array[index], heap->array[getParentIndex(index)]);
         index = getParentIndex(index);
     }
+    
+    heap->cur_size++;
     printf(">> %d inserted into heap successfully\n", elem);
-
     return;
 }
 
