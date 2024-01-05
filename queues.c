@@ -27,13 +27,11 @@ void enqueue(int *queue)
         printf("\n>>> Error: Queue OverFlow <<<\n");
         return;
     }
-    else {
-        printf("\nEnter the element to be inserted:\t");
-        scanf("%d", &elem);
-        printf("front:%d, rear:%d\n", front, rear);
-        queue[++rear] = elem;
-        printf("%d has been pushed.\n", queue[rear]);
-    }
+    printf("\nEnter the element to be inserted:\t");
+    scanf("%d", &elem);
+    printf("front:%d, rear:%d\n", front, rear);
+    queue[++rear] = elem;
+    printf("%d has been pushed.\n", queue[rear]);
     return;
 }
 void dequeue(int *queue)
