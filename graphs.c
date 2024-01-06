@@ -40,7 +40,7 @@ struct graph_t* create_graph()
         exit(1);
     }
 
-    for(int i=0; i<new_graph->vertices; i++)
+    for(int i = 0; i < new_graph->vertices; i++)
     {
         new_graph->matrix[i] = (int*) calloc (new_graph->vertices, sizeof(int));
         if(new_graph->matrix == NULL) {
@@ -69,6 +69,8 @@ void delete_graph (struct graph_t *graph)
         free(graph->matrix[i]);
     free(graph->matrix);
     free(graph);
+
+    printf("Graph Deleted successfully.\n");
     
     return;
 }
@@ -107,7 +109,7 @@ void dfs(struct graph_t *graph, int node, int visited_arr[])
     printf("%d ", node);
     for (int i = 0; i < graph->vertices; i++) {
         if (i == node) continue;
-        if ((graph->matrix[node][i] > 1) && (!visited_arr[i])) {
+        if ((graph->matrix[node][i] > 0) && (!visited_arr[i])) {
             dfs(graph, i, visited_arr);
         }
     }
@@ -118,16 +120,33 @@ void dfs_traversal (struct graph_t *graph)
 {
     int visited_arr[graph->vertices];
     
-    for(int i = 0; i < graph->vertices; i++)
+    for(int i = 0; i < graph->vertices; i++) 
         visited_arr[i] = 0;
     
+    printf("\nDFS Traversal:\n");
     dfs(graph, 0, visited_arr);
     return;
 }
 
 void prefill_graph (struct graph_t *graph)
 {
+    printf("\n>> Prefilling Graph\n");
+    delete_graph(graph);
     graph->vertices = 5;
+
+    graph->matrix = (int **)calloc(graph->vertices, sizeof(int *));
+    if (graph->matrix == NULL) {
+        printf(">>> Error: Memory insufficient to create matrix\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < graph->vertices; i++) {
+        graph->matrix[i] = (int *)calloc(graph->vertices, sizeof(int));
+        if (graph->matrix[i] == NULL) {
+            printf(">>> Error: Memory insufficient to create matrix[%d]\n", i);
+            exit(1);
+        }
+    }
 
     graph->matrix[0][1] = 4;
     graph->matrix[0][4] = 3;
@@ -169,7 +188,7 @@ void main()
         scanf("%d", &choice);
         switch(choice)
         {
-            case 1: create_graph();
+            case 1: graph = create_graph();
                     break;
             case 2: insert_edge(graph);
                     break;
