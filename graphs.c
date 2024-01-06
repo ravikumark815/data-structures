@@ -8,7 +8,12 @@ Insert Edge     : Insert an edge into the graph
 Delete Graph    : Delete graph and exit
 Display Graph   : Display graph in matrix format
 Prefill graph   : Create a graph with prefilled values
+DFS Traversal   : Print DFS traversal of the graph
+BFS Traversal   : Print BFS traversal of the graph
 
+For a tree:
+BFS :: Level Order Traversal
+DFS :: Pre Order Traversal
 */
 
 #include <stdio.h>
@@ -65,7 +70,7 @@ void delete_graph (struct graph_t *graph)
     free(graph->matrix);
     free(graph);
     
-    exit(0);
+    return;
 }
 
 void display_graph (struct graph_t *graph)
@@ -96,6 +101,30 @@ void display_graph (struct graph_t *graph)
     return;
 }
 
+void dfs(struct graph_t *graph, int node, int visited_arr[])
+{
+    visited_arr[node] = 1;
+    printf("%d ", node);
+    for (int i = 0; i < graph->vertices; i++) {
+        if (i == node) continue;
+        if ((graph->matrix[node][i] > 1) && (!visited_arr[i])) {
+            dfs(graph, i, visited_arr);
+        }
+    }
+    return;
+}
+
+void dfs_traversal (struct graph_t *graph)
+{
+    int visited_arr[graph->vertices];
+    
+    for(int i = 0; i < graph->vertices; i++)
+        visited_arr[i] = 0;
+    
+    dfs(graph, 0, visited_arr);
+    return;
+}
+
 void prefill_graph (struct graph_t *graph)
 {
     graph->vertices = 5;
@@ -115,6 +144,9 @@ void prefill_graph (struct graph_t *graph)
     graph->matrix[4][1] = 5;
     graph->matrix[4][3] = 6;
     
+    printf(">> Graph Created\n");
+    display_graph(graph);
+    
     return;
 }
 
@@ -126,18 +158,28 @@ void main()
     
     while(1){
         printf("\n---------------------\n");
-        printf("1.Insert Edge\n2.Display Graph\n3.Delete Graph\n4.Prefill Graph\n");
+        printf("1.Create New Graph\n" 
+            "2.Insert Edge\n"
+            "3.Display Graph\n"
+            "4.Delete Graph\n"
+            "5.DFS Traversal\n"
+            "6.Prefill Graph\n"
+        );
         printf("\nChoose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
         {
-            case 1: insert_edge(graph);
+            case 1: create_graph();
                     break;
-            case 2: display_graph(graph);
+            case 2: insert_edge(graph);
                     break;
-            case 3: delete_graph(graph);
+            case 3: display_graph(graph);
                     break;
-            case 4: prefill_graph(graph);
+            case 4: delete_graph(graph);
+                    break;
+            case 5: dfs_traversal(graph);
+                    break;
+            case 6: prefill_graph(graph);
                     break;
             default: return;
         }
