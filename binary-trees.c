@@ -27,6 +27,8 @@ struct node
 
 typedef struct node* NODE; // Declare a type named NODE for easy use
 
+int tree_size = 0;
+
 /*
 Function    : findMax
 Purpose     : To find the highest element in a tree
@@ -70,7 +72,8 @@ NODE insert(NODE root, int element)
         root->data = element;
         root->left = NULL;
         root->right = NULL;
-        printf("%d has been inserted\n", root->data);
+        tree_size++;
+        printf("%d has been inserted. Current Size: %d\n", root->data, tree_size);
     }
 
     if (element < root->data) {
@@ -111,6 +114,7 @@ NODE delete(NODE root, int element)
         else if(root->right == NULL)
             root = root->left;
         free(temp);
+        printf("Deletion Successful. Current Size:%d\n", --tree_size);
     }
     return root;
 }
@@ -181,7 +185,7 @@ void preorder_traversal(NODE root)
 
 /*
 Function    : postorder_traversal
-Purpose     : To find the preorder traversal of a binary tree
+Purpose     : To find the postorder traversal of a binary tree
 */
 void postorder_traversal(NODE root)
 {
@@ -190,6 +194,41 @@ void postorder_traversal(NODE root)
     postorder_traversal(root->left);
     postorder_traversal(root->right);
     printf("%d ", root->data);
+
+    return;
+}
+
+/*
+Function    : levelorder_traversal
+Purpose     : To find the levelorder traversal of a binary tree
+*/
+void levelorder_traversal(NODE root)
+{
+    if (root == NULL)
+        return;
+
+    // Create a queue to hold node pointers
+    NODE queue[tree_size];
+    int front = 0, rear = 0;
+
+    printf("\nLevel Order Traversal: %d\n", tree_size);
+
+    // Enqueue the root node
+    queue[rear++] = root;
+
+    while (front < rear) {
+        // Dequeue a node and print its data
+        NODE cur = queue[front++];
+        printf("%d ", cur->data);
+
+        // Enqueue left child if exists
+        if (cur->left != NULL)
+            queue[rear++] = cur->left;
+
+        // Enqueue right child if exists
+        if (cur->right != NULL)
+            queue[rear++] = cur->right;
+    }
 
     return;
 }
@@ -213,6 +252,7 @@ int main()
                 "7.Inorder Traversal\n"
                 "8.Preorder Traversal\n"
                 "9.Postorder Traversal\n"
+                "10.Levelorder Traversal\n"
             );
         printf(">> Choose your option:\t");
         scanf("%d", &choice);
@@ -255,6 +295,8 @@ int main()
             case 8: preorder_traversal(root);
                     break;
             case 9: postorder_traversal(root);
+                    break;
+            case 10: levelorder_traversal(root);
                     break;
             default: return 0;
         }
