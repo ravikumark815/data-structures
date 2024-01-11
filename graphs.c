@@ -131,12 +131,11 @@ void dfs_traversal (struct graph_t *graph)
 
 void bfs_traversal (struct graph_t *graph)
 {
-    int vertices = graph->vertices;
-    int visited_arr[vertices];
-    int queue[vertices];
+    int visited_arr[graph->vertices];
+    int queue[graph->vertices];
     int front = 0, rear = 0;
 
-    for(int i=0; i < vertices; i++)
+    for(int i=0; i < graph->vertices; i++)
         visited_arr[i] = 0;
     
     printf("\nBFS Traversal:\n");
@@ -146,13 +145,15 @@ void bfs_traversal (struct graph_t *graph)
     while (front != rear) {
         int cur = queue[front++];
         printf("%d ", cur);
-        for (int i = 0; i < vertices; i++) {
+        for (int i = 0; i < graph->vertices; i++) {
             if ((graph->matrix[cur][i] > 0) && !visited_arr[i]) {
                 visited_arr[i] = 1;
                 queue[rear++] = i;
             }
         }
     }
+    
+    return;
 }
 
 void prefill_graph (struct graph_t *graph)
