@@ -207,11 +207,15 @@ void levelorder_traversal(NODE root)
     if (root == NULL)
         return;
 
+    printf("\nLevel Order Traversal: %d\n", tree_size);
+
+    if (tree_size == 1) {
+        printf("%d", root->data);
+    }
+
     // Create a queue to hold node pointers
     NODE queue[tree_size];
     int front = 0, rear = 0;
-
-    printf("\nLevel Order Traversal: %d\n", tree_size);
 
     // Enqueue the root node
     queue[rear++] = root;
