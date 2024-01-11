@@ -14,7 +14,7 @@ findMin : Returns lowest element of the tree
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX(a, b) (a > b) ? a : b;
+#define MAX(a, b) (a > b) ? a : b; 
 
 struct node
 {
@@ -41,6 +41,7 @@ NODE create_node(int element)
     new_node->height = 1;
     new_node->left = NULL;
     new_node->right = NULL;
+    new_node->data = element;
 
     return new_node;
 }
@@ -62,7 +63,13 @@ Purpose     : To find balance value at any node level
 */
 int getBalance(NODE root)
 {
-    return (root->left->height - root->right->height);
+    if (root == NULL)
+        return 0;
+
+    int leftHeight = (root->left != NULL) ? root->left->height : 0;
+    int rightHeight = (root->right != NULL) ? root->right->height : 0;
+
+    return (leftHeight - rightHeight);
 }
 
 /*
@@ -150,24 +157,24 @@ NODE insert(NODE node, int element)
     
     int balance = getBalance(node);
 
-    // Right Right Case 5->10->15
-    if ((balance < -1) && element > node->right->data)
-        return leftRotate(node);
-    
     // Left Left Case 15->10->5
     if ((balance > 1) && element < node->left->data)
         return rightRotate(node);
     
-    // Right Left Case 5->15->10
-    if ((balance < -1) && element < node->right->data) {
-        node->right = rightRotate(node->right);
+    // Right Right Case 5->10->15
+    if ((balance < -1) && element > node->right->data)
         return leftRotate(node);
-    }
-
+    
     // Left Right Case 15->5->10
     if ((balance > 1) && element > node->left->data) {
         node->left = leftRotate(node->left);
         return rightRotate(node);
+    }
+
+    // Right Left Case 5->15->10
+    if ((balance < -1) && element < node->right->data) {
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
     }
 
     return node;
