@@ -110,6 +110,7 @@ void dfs(struct graph_t *graph, int node, int visited_arr[])
     for (int i = 0; i < graph->vertices; i++) {
         if (i == node) continue;
         if ((graph->matrix[node][i] > 0) && (!visited_arr[i])) {
+            visited_arr[node] = 1;
             dfs(graph, i, visited_arr);
         }
     }
@@ -126,6 +127,32 @@ void dfs_traversal (struct graph_t *graph)
     printf("\nDFS Traversal:\n");
     dfs(graph, 0, visited_arr);
     return;
+}
+
+void bfs_traversal (struct graph_t *graph)
+{
+    int vertices = graph->vertices;
+    int visited_arr[vertices];
+    int queue[vertices];
+    int front = 0, rear = 0;
+
+    for(int i=0; i < vertices; i++)
+        visited_arr[i] = 0;
+    
+    printf("\nBFS Traversal:\n");
+    visited_arr[0] = 1;
+    queue[rear++] = 0;
+
+    while (front != rear) {
+        int cur = queue[front++];
+        printf("%d ", cur);
+        for (int i = 0; i < vertices; i++) {
+            if ((graph->matrix[cur][i] > 0) && !visited_arr[i]) {
+                visited_arr[i] = 1;
+                queue[rear++] = i;
+            }
+        }
+    }
 }
 
 void prefill_graph (struct graph_t *graph)
@@ -177,17 +204,20 @@ void main()
     
     while(1){
         printf("\n---------------------\n");
-        printf("1.Create New Graph\n" 
+        printf("0.Prefill Graph\n" 
+            "1.Create New Graph\n" 
             "2.Insert Edge\n"
             "3.Display Graph\n"
             "4.Delete Graph\n"
             "5.DFS Traversal\n"
-            "6.Prefill Graph\n"
+            "6.BFS Traversal\n"
         );
         printf("\nChoose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
         {
+            case 0: prefill_graph(graph);
+                    break;
             case 1: graph = create_graph();
                     break;
             case 2: insert_edge(graph);
@@ -198,7 +228,7 @@ void main()
                     break;
             case 5: dfs_traversal(graph);
                     break;
-            case 6: prefill_graph(graph);
+            case 6: bfs_traversal(graph);
                     break;
             default: return;
         }
