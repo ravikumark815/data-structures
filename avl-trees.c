@@ -69,7 +69,7 @@ int getBalance(NODE root)
 Function    : leftRotate
 Purpose     : Left Rotation
 */
-int leftRotate(NODE x)
+NODE leftRotate(NODE x)
 {
     NODE y = x->right;
     NODE temp = y->left;
@@ -87,7 +87,7 @@ int leftRotate(NODE x)
 Function    : rightRotate
 Purpose     : Right Rotation
 */
-int rightRotate(NODE x)
+NODE rightRotate(NODE x)
 {
     NODE y = x->left;
     NODE temp = y->right;
@@ -136,7 +136,7 @@ Purpose     : To insert node into the AVK tree
 NODE insert(NODE node, int element)
 {
     if (node == NULL)
-        return new_node(element);
+        return create_node(element);
 
     if (element < node->data) {
         node->left = insert(node->left, element);
