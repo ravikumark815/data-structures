@@ -164,7 +164,7 @@ void bfs_traversal (struct graph_t *graph, int source)
 
 void bfs_shortest_path(struct graph_t *graph, int src, int dst)
 {
-    if ((src>=0) && (dst>=0) && ((src >= graph->vertices) || (dst >= graph->vertices))) {
+    if ((!src) || (!dst) || ((src >= graph->vertices) || (dst >= graph->vertices))) {
         printf(">> Error: Please enter correct source and destination. Vertices: %d\n", graph->vertices);
         return;
     }
@@ -207,6 +207,16 @@ void bfs_shortest_path(struct graph_t *graph, int src, int dst)
     }
 
     printf("No path found\n");
+    return;
+}
+
+void dijkstra (struct graph_t * graph, int src)
+{
+    if ((!src) || (src >= graph->vertices)) {
+        printf(">> Error: Please enter correct source. Vertices: %d\n", graph->vertices);
+        return;
+    }
+
     return;
 }
 
@@ -267,6 +277,7 @@ void main()
             "5.DFS Traversal\n"
             "6.BFS Traversal\n"
             "7.BFS Shortest Path\n"
+            "7.Dijkstra's Single Source Shortest Path\n"
         );
         printf("\nChoose your Option:\t");
         scanf("%d", &choice);
@@ -293,6 +304,11 @@ void main()
                     printf("Enter source and destination nodes: ");
                     scanf("%d %d", &src, &dst);
                     bfs_shortest_path(graph, src, dst);
+                    break;
+            case 8: int dijkstra_src = 0;
+                    printf("Enter source node: ");
+                    scanf("%d", &dijkstra_src);
+                    dijkstra(graph, dijkstra_src);
                     break;
             default: return;
         }
