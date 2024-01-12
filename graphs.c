@@ -129,18 +129,23 @@ void dfs_traversal (struct graph_t *graph)
     return;
 }
 
-void bfs_traversal (struct graph_t *graph)
+void bfs_traversal (struct graph_t *graph, int source)
 {
     int visited_arr[graph->vertices];
     int queue[graph->vertices];
     int front = 0, rear = 0;
 
+    if (source >= graph->vertices) {
+        printf(">> Error: Please enter correct source. Vertices: %d\n", graph->vertices);
+        return;
+    }
+
     for(int i=0; i < graph->vertices; i++)
         visited_arr[i] = 0;
     
     printf("\nBFS Traversal:\n");
-    visited_arr[0] = 1;
-    queue[rear++] = 0;
+    visited_arr[source] = 1;
+    queue[rear++] = source;
 
     while (front != rear) {
         int cur = queue[front++];
@@ -229,7 +234,10 @@ void main()
                     break;
             case 5: dfs_traversal(graph);
                     break;
-            case 6: bfs_traversal(graph);
+            case 6: int bfs_src = 0;
+                    printf("Enter source node: ");
+                    scanf("%d", &bfs_src);
+                    bfs_traversal(graph, bfs_src);
                     break;
             default: return;
         }
