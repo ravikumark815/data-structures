@@ -131,14 +131,14 @@ void dfs_traversal (struct graph_t *graph)
 
 void bfs_traversal (struct graph_t *graph, int source)
 {
-    int visited_arr[graph->vertices];
-    int queue[graph->vertices];
-    int front = 0, rear = 0;
-
     if (source >= graph->vertices) {
         printf(">> Error: Please enter correct source. Vertices: %d\n", graph->vertices);
         return;
     }
+
+    int visited_arr[graph->vertices];
+    int queue[graph->vertices];
+    int front = 0, rear = 0;
 
     for(int i=0; i < graph->vertices; i++)
         visited_arr[i] = 0;
