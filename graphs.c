@@ -18,6 +18,7 @@ DFS :: Pre Order Traversal
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 struct graph_t {
     int vertices;
@@ -161,6 +162,54 @@ void bfs_traversal (struct graph_t *graph, int source)
     return;
 }
 
+void bfs_shortest_path(struct graph_t *graph, int src, int dst)
+{
+    if ((src>=0) && (dst>=0) && ((src >= graph->vertices) || (dst >= graph->vertices))) {
+        printf(">> Error: Please enter correct source and destination. Vertices: %d\n", graph->vertices);
+        return;
+    }
+
+    int visited_arr[graph->vertices];
+    int distance_arr[graph->vertices];
+    int pred_arr[graph->vertices];
+    int queue[graph->vertices];
+    int front=0, rear=0;
+
+    for (int i=0; i < graph->vertices; i++) {
+        visited_arr[i] = 0;
+        distance_arr[i] = INT_MAX;
+        pred_arr[i] = -1;
+    }
+    
+    queue[rear++] = src;
+    visited_arr[src] = 1;
+    distance_arr[src] = 0;
+     
+    while (front != rear) {
+        int cur = queue[front++];
+        for (int i=0; i < graph->vertices; i++) {
+            if ((graph->matrix[cur][i] > 0) && (!visited_arr[i])) {
+                visited_arr[i] = 1;
+                distance_arr[i] = distance_arr[cur] + i;
+                pred_arr[i] = cur;
+                queue[rear++] = i;
+
+                if (i == dst) {
+                    printf("Path:\n");
+                    for (int index = dst; index != -1; index = pred_arr[index]) {
+                        printf("%d ",index);
+                    }
+                    printf("\nDistance: %d", distance_arr[i]);
+                    return;
+                }
+            }
+        }
+    }
+
+    printf("No path found\n");
+    return;
+}
+
 void prefill_graph (struct graph_t *graph)
 {
     printf("\n>> Prefilling Graph\n");
@@ -217,6 +266,7 @@ void main()
             "4.Delete Graph\n"
             "5.DFS Traversal\n"
             "6.BFS Traversal\n"
+            "7.BFS Shortest Path\n"
         );
         printf("\nChoose your Option:\t");
         scanf("%d", &choice);
@@ -238,6 +288,11 @@ void main()
                     printf("Enter source node: ");
                     scanf("%d", &bfs_src);
                     bfs_traversal(graph, bfs_src);
+                    break;
+            case 7: int src = 0, dst = 0;
+                    printf("Enter source and destination nodes: ");
+                    scanf("%d %d", &src, &dst);
+                    bfs_shortest_path(graph, src, dst);
                     break;
             default: return;
         }
