@@ -130,8 +130,12 @@ void dfs_traversal (struct graph_t *graph)
     return;
 }
 
-void bfs_traversal (struct graph_t *graph, int source)
+void bfs_traversal (struct graph_t *graph)
 {
+    int source = 0;
+    printf("Enter source node: ");
+    scanf("%d", &source);
+    
     if (source >= graph->vertices) {
         printf(">> Error: Please enter correct source. Vertices: %d\n", graph->vertices);
         return;
@@ -162,8 +166,12 @@ void bfs_traversal (struct graph_t *graph, int source)
     return;
 }
 
-void bfs_shortest_path(struct graph_t *graph, int src, int dst)
+void bfs_shortest_path(struct graph_t *graph)
 {
+    int src = 0, dst = 0;
+    printf("Enter source and destination nodes: ");
+    scanf("%d %d", &src, &dst);
+    
     if ((!src) || (!dst) || ((src >= graph->vertices) || (dst >= graph->vertices))) {
         printf(">> Error: Please enter correct source and destination. Vertices: %d\n", graph->vertices);
         return;
@@ -210,12 +218,56 @@ void bfs_shortest_path(struct graph_t *graph, int src, int dst)
     return;
 }
 
-void dijkstra (struct graph_t * graph, int src)
+void dijkstra (struct graph_t * graph)
 {
-    if ((!src) || (src >= graph->vertices)) {
+    int src = -1;
+    printf("Enter Source Node: ");
+    scanf("%d", &src);
+    
+    if ((src < 0) || (src >= graph->vertices)) {
         printf(">> Error: Please enter correct source. Vertices: %d\n", graph->vertices);
         return;
     }
+
+    int visited_arr[graph->vertices]; // Marks 1 if a vertex is visited
+    int distance_arr[graph->vertices]; // Consists of distances from src to each vertex
+
+    for (int i=0; i < graph->vertices; i++) {
+        visited_arr[i] = 0;
+        distance_arr[i] = INT_MAX;
+    }
+
+    distance_arr[src] = 0;
+    
+    for (int i = 0; i < graph->vertices; i++) {
+        
+        // Find the vertex in visited_arr with least min dist and unvisited yet
+        int u, u_dist = INT_MAX;
+        for (int k = 0; k < graph->vertices; k++) {
+            if ((visited_arr[k] == 0) && (distance_arr[k] <= u_dist)) {
+                u_dist = distance_arr[k];
+                u = k;
+            }
+        }
+
+        visited_arr[u] = 1;
+        for (int v = 0; v < graph->vertices; v++) {
+            // Update distance_arr[v] only if it is not visited, 
+            // there is an edge from u to v, 
+            // and the total weight of path from src to v through u is less than the current value of dist[v]
+            if ((!visited_arr[v]) 
+                && (distance_arr[u] != INT_MAX)
+                && (graph->matrix[u][v])
+                && ((distance_arr[u] + graph->matrix[u][v]) < distance_arr[v])
+            )
+                distance_arr[v] = distance_arr[u] + graph->matrix[u][v];
+        }
+    }
+    
+    printf("\nDijkstra's Algorithm\n");
+    printf("Result:\n");
+    for (int i = 0; i < graph->vertices; i++)
+        printf("%d->%d : %d\n", src, i, distance_arr[i]);
 
     return;
 }
@@ -277,7 +329,7 @@ void main()
             "5.DFS Traversal\n"
             "6.BFS Traversal\n"
             "7.BFS Shortest Path\n"
-            "7.Dijkstra's Single Source Shortest Path\n"
+            "8.Dijkstra's Single Source Shortest Path\n"
         );
         printf("\nChoose your Option:\t");
         scanf("%d", &choice);
@@ -295,20 +347,11 @@ void main()
                     break;
             case 5: dfs_traversal(graph);
                     break;
-            case 6: int bfs_src = 0;
-                    printf("Enter source node: ");
-                    scanf("%d", &bfs_src);
-                    bfs_traversal(graph, bfs_src);
+            case 6: bfs_traversal(graph);
                     break;
-            case 7: int src = 0, dst = 0;
-                    printf("Enter source and destination nodes: ");
-                    scanf("%d %d", &src, &dst);
-                    bfs_shortest_path(graph, src, dst);
+            case 7: bfs_shortest_path(graph);
                     break;
-            case 8: int dijkstra_src = 0;
-                    printf("Enter source node: ");
-                    scanf("%d", &dijkstra_src);
-                    dijkstra(graph, dijkstra_src);
+            case 8: dijkstra(graph);
                     break;
             default: return;
         }
