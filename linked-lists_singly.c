@@ -252,6 +252,33 @@ void reverse()
     return;
 }
 
+void detect_cycles()
+{
+    if (linked_list == NULL) {
+        printf("\n>>> Error: Linked List Empty <<<\n");
+        return;
+    }
+    
+    if (linked_list->link == NULL) {
+        printf("\nOnly one element found. Skipping Cycle Check.\n");
+        return;
+    }
+
+    NODE fast = linked_list;
+    NODE slow = linked_list;
+
+    while (fast && fast->link) {
+        if (fast == slow) {
+            printf("Cycle Found!\n");
+            return;
+        }
+        fast = fast->link->link;
+        slow = slow->link->link;
+    }   
+    
+    return; 
+}
+
 int main()
 {
     int choice, enlink_choice, delink_choice;
@@ -262,7 +289,7 @@ int main()
 
     while(1) {
         printf("\n----------------------------------\n");
-        printf("1.Enlink\n2.Delink\n3.Display\n4.Search\n5.Reverse\n6.Exit\n");
+        printf("1.Enlink\n2.Delink\n3.Display\n4.Search\n5.Reverse\n6.Detect Cycles\n7.Exit\n");
         printf(">> Choose your Option:\t");
         scanf("%d", &choice);
         switch(choice)
@@ -301,7 +328,9 @@ int main()
                     break;
             case 5: reverse();
                     break;
-            case 6: return 0;
+            case 6: detect_cycles();
+                    break;
+            case 7: return 0;
             default: printf("\n>> Error: Enter Valid Option <<\n");
         }
     }
