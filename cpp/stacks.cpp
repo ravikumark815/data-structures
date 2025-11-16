@@ -20,6 +20,7 @@ class Stack
         void push(int data);
         int pop();
         void print();
+        void top_element();
 };
 
 Stack::Stack(int stack_size) {
@@ -54,6 +55,10 @@ void Stack::print() {
     return;
 }
 
+void Stack::top_element() {
+    cout << "Top: " << stack_arr[top] << endl;
+}
+
 int main()
 {
     int size;
@@ -63,6 +68,7 @@ int main()
     st.push(100);
     st.push(200);
     st.push(300);
+    st.top_element();
     st.print();
     st.push(400);
     st.pop();
