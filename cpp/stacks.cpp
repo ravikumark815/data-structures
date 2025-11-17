@@ -5,6 +5,7 @@ GitHub: https://github.com/ravikumark815
 
 #include <iostream>
 #include <vector>
+#include <climits>
 
 using namespace std;
 
@@ -14,6 +15,8 @@ class Stack
         vector<int> stack_arr;
         int top;
         int size;
+        int min;
+        int max;
     
     public:
         Stack(int stack_size);
@@ -21,11 +24,15 @@ class Stack
         int pop();
         void print();
         void top_element();
+        void min_element();
+        void max_element();
 };
 
 Stack::Stack(int stack_size) {
     size = stack_size;
     top = -1;
+    min = INT_MAX;
+    max = INT_MIN;
     stack_arr.resize(size);
 }
 
@@ -35,6 +42,8 @@ void Stack::push(int data) {
         return;
     }
     stack_arr[++top] = data;
+    if (min > data) min = data;
+    if (max < data) max = data;
 }
 
 int Stack::pop() {
@@ -59,6 +68,14 @@ void Stack::top_element() {
     cout << "Top: " << stack_arr[top] << endl;
 }
 
+void Stack::min_element() {
+    cout << "Min: " << min << endl;
+}
+
+void Stack::max_element() {
+    cout << "Max: " << max << endl;
+}
+
 int main()
 {
     int size;
@@ -71,6 +88,8 @@ int main()
     st.top_element();
     st.print();
     st.push(400);
+    st.min_element();
+    st.max_element();
     st.pop();
     st.print();
     st.pop();
