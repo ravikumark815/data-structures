@@ -34,6 +34,7 @@ class LinkedList {
         void delete_pos(int pos);
         void print();
         void min_max(int item);
+        void reverse();
         ~LinkedList();
 };
 
@@ -80,6 +81,7 @@ void LinkedList::insert_after(int pos, int item) {
         cur = cur->link;
     }
     if(cur->data == pos) {
+        new_node->link = cur->link;
         cur->link = new_node;
         min_max(new_node->data);
     }
@@ -176,6 +178,27 @@ void LinkedList::print() {
 void LinkedList::min_max(int item) {
     if (item < min) min = item;
     if (item > max) max = item;
+    return;
+}
+
+void LinkedList::reverse() {
+    if (head == NULL) {
+        cout << "Linked List empty\n";
+        return;
+    }
+    if (head->link == NULL) {
+        return;
+    }
+    Node *prev = NULL, *cur = head, *next = NULL;
+    
+    while(cur) {
+        next = cur->link;
+        cur->link = prev;
+        prev = cur;
+        cur = next;
+    }
+    head = prev;
+    return;
 }
 
 int main()
@@ -193,6 +216,12 @@ int main()
     list.delete_end();
     list.print();
     list.delete_pos(303);
+    list.print();
+    list.insert_start(101);
+    list.print();
+    list.insert_after(202, 303);
+    list.print();
+    list.reverse();
     list.print();
     return 0;
 }
