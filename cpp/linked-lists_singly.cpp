@@ -5,6 +5,7 @@ GitHub: https://github.com/ravikumark815
 
 #include <iostream>
 #include <climits>
+using namespace std;
 
 class Node {
     public:
@@ -20,11 +21,11 @@ class Node {
 class LinkedList {
     private:
         Node *head;
-        Node *min;
-        Node *max;
+        int min;
+        int max;
     
     public:
-        LinkedList();
+        LinkedList(int item);
         void insert_start(int item);
         void insert_end(int item);
         void insert_after(int item);
@@ -40,31 +41,34 @@ LinkedList::LinkedList(int item) {
     max = INT_MIN;
 }
 
-LinkedList::LinkedList(const LinkedList& list) {
-    if (list.head == NULL) head = NULL;
-    else {
-        Node *ptr1, *ptr2;
-        ptr1 = list.head;
-        ptr2 = head = new Node(ptr1->data);
-    }
-}
-
 void LinkedList::insert_start(int item) {
-    Node node(item);
-    node.link = head;
-    head = node;
+    Node *new_node = new Node(item);
+    if (head == NULL) {
+        head = new_node;
+        return;
+    }
+    new_node->link = head;
+    head = new_node;
     if (item < min) min = item;
     if (item > max) max = item;
     return; 
 }
 
 void LinkedList::insert_end(int item) {
-    Node node(item);
-
-    while (node.link) {
-        n
+    Node *new_node = new Node(item);
+    Node *cur = head;
+    while (cur->link) {
+        cur = new_node->link;
     }
+    cur->link = new_node;
     if (item < min) min = item;
     if (item > max) max = item;
     return;
+}
+
+int main()
+{
+    LinkedList list;
+    list.insert_start
+    return 0;
 }
