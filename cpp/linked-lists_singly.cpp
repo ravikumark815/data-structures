@@ -35,6 +35,9 @@ class LinkedList {
         void print();
         void min_max(int item);
         void reverse();
+        void size();
+        void find(int item);
+        void has_cycle();
         ~LinkedList();
 };
 
@@ -42,6 +45,7 @@ LinkedList::LinkedList() {
     head = NULL;
     min = INT_MAX;
     max = INT_MIN;
+    cout << "--- Linked List Created ---\n";
 }
 LinkedList::~LinkedList() {
     if (head != NULL) {
@@ -53,7 +57,7 @@ LinkedList::~LinkedList() {
             delete prev;
         }
     }
-    cout << "List deleted\n";
+    cout << "--- Linked list deleted ---\n";
 }
 
 void LinkedList::insert_start(int item) {
@@ -201,6 +205,66 @@ void LinkedList::reverse() {
     return;
 }
 
+void LinkedList::size() {
+    if (head == NULL) {
+        cout << "Size: 0\n";
+        return;
+    }
+    if (head->link == NULL) {
+        cout << "Size: 1\n";
+        return;
+    }
+    int count = 0;
+    Node *cur = head;
+    while (cur) {
+        cur = cur->link;
+        count++;
+    }
+    cout << "Size: " << count << endl;
+}
+
+void LinkedList::find(int item) {
+    if (head == NULL) {
+        cout << "Linked List empty\n";
+        return;
+    }
+    Node *cur = head;
+    int pos = 1;
+    while (cur) {
+        if (cur->data == item) {
+            cout << item << " found at position: " << pos << endl;
+            return;
+        }
+        pos++;
+        cur = cur->link;
+    }
+    cout << item << " not found in the linked list\n";
+    return;
+}
+
+void LinkedList::has_cycle() {
+    if (head == NULL) {
+        cout << "Linked List empty\n";
+        return;
+    }
+    if (head->link == NULL) {
+        cout << "No cycles present\n";
+        return;
+    }
+
+    Node *slow = head, *fast = head;
+    while (fast && fast->link) {
+        slow = slow->link;
+        fast = fast->link->link;
+        if (slow == fast) {
+            cout << "Cycles Present. Data: " << slow->data << endl;
+            return;
+        }
+    }
+    cout << "No cycles present\n";
+    return;
+}
+
 int main()
 {
     LinkedList list;
@@ -223,5 +287,9 @@ int main()
     list.print();
     list.reverse();
     list.print();
+    list.size();
+    list.find(202);
+    list.find(900);
+    list.has_cycle();
     return 0;
 }
