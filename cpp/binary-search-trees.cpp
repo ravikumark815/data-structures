@@ -36,6 +36,7 @@ class BinarySearchTree
         void print_helper(Node *ptr, int level);
         void min_element();
         void max_element();
+        int height(Node *root);
         void inorder_helper(Node *root);
         void inorder();
         void preorder_helper(Node *root);
@@ -193,6 +194,18 @@ void BinarySearchTree::max_element() {
     return;
 }
 
+int BinarySearchTree::height(Node *root) {
+    if (root == NULL) return -1;
+    int leftHeight = height(root->left);
+    int rightHeight = height(root->right);
+
+    if (leftHeight > rightHeight) {
+        return leftHeight + 1;
+    } else {
+        return rightHeight + 1;
+    }
+}
+
 void BinarySearchTree::inorder_helper(Node *root) {
     if (root == NULL) return;
     inorder_helper(root->left);
@@ -272,6 +285,7 @@ int main()
     bst.print();
     bst.min_element();
     bst.max_element();
+    cout << "Height: " << bst.height(bst.root) << endl;
     bst.inorder();
     bst.preorder();
     bst.postorder();
