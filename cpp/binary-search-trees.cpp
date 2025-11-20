@@ -35,6 +35,8 @@ class BinarySearchTree
         void del(int item);
         void print();
         void print_helper(Node *ptr, int level);
+        void min_element();
+        void max_element();
 };
 
 BinarySearchTree::BinarySearchTree() {
@@ -156,6 +158,35 @@ void BinarySearchTree::print() {
     return;
 }
 
+void BinarySearchTree::min_element() {
+    if (root == NULL) {
+        cout << "Tree Empty\n";
+        return;
+    }
+
+    Node *cur = root;
+    while (cur->left) {
+        cur = cur->left;
+    }
+
+    cout << "Min: " << cur->data << endl;
+    return;
+}
+
+void BinarySearchTree::max_element() {
+    if (root == NULL) {
+        cout << "Tree Empty\n";
+        return;
+    }
+
+    Node *cur = root;
+    while (cur->right) {
+        cur = cur->right;
+    }
+    cout << "Max: " << cur->data << endl;
+    return;
+}
+
 int main()
 {
     BinarySearchTree bst;
@@ -170,6 +201,8 @@ int main()
     bst.insert(900);
     bst.insert(1000);
     bst.print();
+    bst.min_element();
+    bst.max_element();
     bst.del(1000);
     bst.print();
     bst.del(100);
