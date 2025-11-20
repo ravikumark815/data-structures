@@ -4,6 +4,7 @@ GitHub: https://github.com/ravikumark815
 */
 
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -25,10 +26,8 @@ class Node
 
 class BinarySearchTree 
 {
-    private:
-        Node *root;
-
     public:
+        Node *root;
         BinarySearchTree();
         ~BinarySearchTree();
         void insert(int item);
@@ -37,6 +36,13 @@ class BinarySearchTree
         void print_helper(Node *ptr, int level);
         void min_element();
         void max_element();
+        void inorder_helper(Node *root);
+        void inorder();
+        void preorder_helper(Node *root);
+        void preorder();
+        void postorder_helper(Node *root);
+        void postorder();
+        void levelorder();
 };
 
 BinarySearchTree::BinarySearchTree() {
@@ -187,32 +193,94 @@ void BinarySearchTree::max_element() {
     return;
 }
 
+void BinarySearchTree::inorder_helper(Node *root) {
+    if (root == NULL) return;
+    inorder_helper(root->left);
+    cout << root->data << " ";
+    inorder_helper(root->right);
+    return;
+}
+
+void BinarySearchTree::inorder() {
+    cout << "Inorder Traversal: ";
+    inorder_helper(root);
+    cout << endl;
+    return;
+}
+
+void BinarySearchTree::preorder_helper(Node *root) {
+    if (root == NULL) return;
+    cout << root->data << " ";
+    preorder_helper(root->left);
+    preorder_helper(root->right);
+    return;
+}
+
+void BinarySearchTree::preorder() {
+    cout << "Preorder Traversal: ";
+    preorder_helper(root);
+    cout << endl;
+    return;
+}
+
+void BinarySearchTree::postorder_helper(Node *root) {
+    if (root == NULL) return;
+    postorder_helper(root->left);
+    postorder_helper(root->right);
+    cout << root->data << " ";
+    return;
+}
+
+void BinarySearchTree::postorder() {
+    cout << "Postorder Traversal: ";
+    postorder_helper(root);
+    cout << endl;
+    return;
+}
+
+void BinarySearchTree::levelorder() {
+    queue <Node *> q;
+    q.push(root);
+    
+    cout << "Levelorder Traversal: ";
+    while (!q.empty()) {
+        Node *cur = q.front();
+        q.pop();
+        cout << cur->data << " ";
+        if (cur->left) q.push(cur->left);
+        if (cur->right) q.push(cur->right);
+    }
+    cout << endl;
+    
+    return;
+}
+
 int main()
 {
     BinarySearchTree bst;
+    // Inserting elements in a way that creates a more balanced tree
     bst.insert(500);
-    bst.insert(400);
-    bst.insert(300);
+    bst.insert(250);
+    bst.insert(750);
+    bst.insert(150);
+    bst.insert(350);
+    bst.insert(650);
+    bst.insert(850);
     bst.insert(200);
-    bst.insert(100);
-    bst.insert(600);
-    bst.insert(700);
-    bst.insert(800);
-    bst.insert(900);
-    bst.insert(1000);
+    bst.insert(450);
+    bst.insert(950);
     bst.print();
     bst.min_element();
     bst.max_element();
-    bst.del(1000);
-    bst.print();
-    bst.del(100);
-    bst.print();
-    bst.del(300);
-    bst.print();
-    bst.del(700);
-    bst.print();
+    bst.inorder();
+    bst.preorder();
+    bst.postorder();
+    bst.levelorder();
+    bst.del(950);  // Deleting a leaf node
+    bst.del(150);  // Deleting a node with one child
+    bst.del(750);  // Deleting a node with two children
     bst.del(500);
     bst.print();
-    bst.del(999);
+    bst.del(999); // Deleting a non-existent node
     return 0;
 }
