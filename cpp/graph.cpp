@@ -6,6 +6,7 @@ GitHub: https://github.com/ravikumark815
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -21,6 +22,7 @@ class Graph {
         void addEdge(int src, int dst);
         void print();
         void dfs(int startVertex);
+        void bfs(int startVertex);
 };
 
 Graph::Graph(int vertices) {
@@ -79,6 +81,27 @@ void Graph::dfs(int startVertex) {
     return;
 }
 
+void Graph::bfs(int startVertex) {
+    queue<int> q;
+    vector<bool> visited(nVertices, false);
+    cout << "BFS: ";
+
+    q.push(startVertex);
+    visited[startVertex] = true;
+    while (!q.empty()) {
+        int i = q.front();
+        q.pop();
+        cout << i << " ";
+        for (int j = 0; j < nVertices; j++) {
+            if (graph[i][j] && (!visited[j])) {
+                q.push(j);
+                visited[j] = true;
+            }
+        }
+    }
+    cout << endl;
+}
+
 int main()
 {
     Graph g(5);
@@ -96,6 +119,7 @@ int main()
     g.addEdge(3,4);
     g.print();
     g.dfs(0);
+    g.bfs(0);
 
     return 0;
 }
