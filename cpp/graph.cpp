@@ -20,6 +20,8 @@ class Graph {
         Graph(int vertices);
         ~Graph();
         void addEdge(int src, int dst);
+        void addEdge(int src, int dst, int weight);
+        void deleteEdge(int src, int dst);
         void print();
         void dfs(int startVertex);
         void bfs(int startVertex);
@@ -38,12 +40,32 @@ Graph::~Graph() {
 }
 
 void Graph::addEdge(int src, int dst) {
-    if ((src >= nVertices) || (dst >= nVertices)) {
+    if ((src >= nVertices) || (dst >= nVertices) || (src < 0) || (dst < 0)) {
         cout << "Invalid vertex provided \n";
         return;
     }
     graph[src][dst] = 1;
     cout << "Edge " << src << "--" << dst << " added" << endl;
+    return;
+}
+
+void Graph::addEdge(int src, int dst, int weight) {
+    if ((src >= nVertices) || (dst >= nVertices) || (src < 0) || (dst < 0)) {
+        cout << "Invalid vertex provided \n";
+        return;
+    }
+    graph[src][dst] = weight;
+    cout << "Edge " << src << "--" << dst << " added" << endl;
+    return;
+}
+
+void Graph::deleteEdge(int src, int dst) {
+    if ((src >= nVertices) || (dst >= nVertices) || (src < 0) || (dst < 0)) {
+        cout << "Invalid vertex provided \n";
+        return;
+    }
+    graph[src][dst] = 0;
+    cout << "Edge " << src << "--" << dst << " deleted" << endl;
     return;
 }
 
@@ -116,7 +138,7 @@ int main()
     g.addEdge(2,4);
     g.addEdge(3,1);
     g.addEdge(3,2);
-    g.addEdge(3,4);
+    g.addEdge(3,4,9);
     g.print();
     g.dfs(0);
     g.bfs(0);
